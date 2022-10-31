@@ -1,0 +1,9 @@
+/* .row-full-col {
+  display:  flex !important;
+  flex-wrap: wrap !important;
+}
+
+.row-full-col > [class*='col-'] {
+    display: flex !important;
+    flex-direction: column !important;
+  } */
