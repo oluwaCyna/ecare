@@ -9,6 +9,7 @@ class Laboratory extends Model
 {
     protected $fillable = [
         'user_id',
+        'personnel_id',
         'title',
         'first_name',
         'last_name',

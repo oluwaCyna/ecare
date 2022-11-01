@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Drug extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'appearance_id',
+        'appearance_title',
+        'drug',
+        'personnel_name',
+        'personnel_id'
+    ];
+
+    public function drug() 
+    {
+        return $this->belongsTo('Appearance');
+    }
 }

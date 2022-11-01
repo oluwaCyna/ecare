@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Drip extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'appearance_id',
+        'appearance_title',
+        'drip',
+        'personnel_name',
+        'personnel_id'
+    ];
+
+    public function drip() 
+    {
+        return $this->belongsTo('Appearance');
+    }
 }

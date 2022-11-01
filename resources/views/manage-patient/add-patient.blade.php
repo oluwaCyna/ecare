@@ -46,7 +46,7 @@
                                 $(".alert").alert();
                             </script>
 
-                            <form method="POST" action="{{ route('general.record.store') }}"
+                            <form method="POST" action="{{ route('patient.personal.store') }}"
                                 enctype="multipart/form-data">
                                 @csrf
 

@@ -131,9 +131,22 @@ class RegisterController extends Controller
             'raw_password' => $user_pass,
             'password' => Hash::make($user_pass),
         ]);
-        
 
         $user_id = DB::table('users')->where('email', $data['email'])->value('id');
+
+        //Doctor
+        function personnelID ($table, $prefix, $data) {
+            $active_personnel = DB::table($table)->get()->count();
+        if ($active_personnel > 0 && $active_personnel < 10) {
+            $active_personnel = '00'.$active_personnel;
+        }else if ($active_personnel > 9 && $active_personnel < 100) {
+            $active_personnel = '0'.$active_personnel;
+        }else {
+            $active_personnel = $active_personnel;
+        }
+
+        return $personnel_id = $prefix.strtoupper(substr($data['first_name'],0,1).substr($data['last_name'],0,1)).$active_personnel;
+        }
 
         switch ($data['role']) {
 
@@ -155,6 +168,7 @@ class RegisterController extends Controller
             case 'doctor':
                 $role_user = Doctor::create([
                     'user_id' => $user_id,
+                    'personnel_id' => personnelID('doctors', "DOC", $data),
                     'title' => $data['title'],
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
@@ -170,6 +184,7 @@ class RegisterController extends Controller
             case 'nurse':
                 $role_user = Nurse::create([
                     'user_id' => $user_id,
+                    'personnel_id' => personnelID('nurses', "NUR", $data),
                     'title' => $data['title'],
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
@@ -185,6 +200,7 @@ class RegisterController extends Controller
             case 'pharmacy':
                 $role_user = Pharmacy::create([
                     'user_id' => $user_id,
+                    'personnel_id' => personnelID('pharmacies', "PHA", $data),
                     'title' => $data['title'],
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],
@@ -200,6 +216,7 @@ class RegisterController extends Controller
             case 'laboratory':
                 $role_user = Laboratory::create([
                     'user_id' => $user_id,
+                    'personnel_id' => personnelID('laboratories', "LAB", $data),
                     'title' => $data['title'],
                     'first_name' => $data['first_name'],
                     'last_name' => $data['last_name'],

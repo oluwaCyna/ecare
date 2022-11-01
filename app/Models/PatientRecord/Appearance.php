@@ -9,17 +9,10 @@ class Appearance extends Model
 {
     protected $fillable = [
         'record_id',
+        'record_title',
         'title',
-        'comment_id',
-        'diagnosis_id',
-        'test_id',
-        'test_result_id',
-        'scan',
-        'scan_result_id',
-        'treatment_id',
-        'injection_id',
-        'drug_id',
-        'drug_available_id',
+        'personnel_name',
+        'personnel_id' 
     ];
 
     public function appearance() 

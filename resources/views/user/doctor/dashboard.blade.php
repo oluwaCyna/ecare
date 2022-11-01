@@ -35,7 +35,7 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src="@if($user->image != null){{ asset('profile-picture/'.$user->image)@else asset('adminlte/dist/img/avatar5.png') }}@endif"
+                       src="@if($user->image != null){{ asset('profile-picture/'.$user->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif"
                        alt="User profile picture">
                 </div>
 

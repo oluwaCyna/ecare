@@ -181,6 +181,7 @@ class PatientManagementController extends Controller
         ]);
 
         $patient_record = DB::table('records')->where('title', $title)->first();
+        // dd($patient_record);
         Appearance::create([
             'record_id' => $patient_record->id,
             'record_title' => $patient_record->title,
@@ -267,8 +268,6 @@ class PatientManagementController extends Controller
             ]);
         }
 
-
-        
         return view('manage-patient.doctor.add-record')->with('success', 'Patient record has been saved successfuly');
     }
 
