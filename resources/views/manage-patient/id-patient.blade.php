@@ -59,16 +59,16 @@
                                 @csrf
 
                                 <div class="row mb-3">
-                                    <label for="patient_id"
+                                    <label for="patient_key"
                                         class="col-md-4 col-form-label text-md-end">{{ __('Patint ID') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="patient_id" type="text"
-                                            class="form-control @error('patient_id') is-invalid @enderror" name="patient_id"
-                                            value="{{ $user->patient_id ?? old('patient_id') }}" autocomplete="patient_id"
+                                        <input id="patient_key" type="text"
+                                            class="form-control @error('patient_key') is-invalid @enderror" name="patient_key"
+                                            value="{{ $user->patient_key ?? old('patient_key') }}" autocomplete="patient_key"
                                             autofocus>
 
-                                        @error('patient_id')
+                                        @error('patient_key')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

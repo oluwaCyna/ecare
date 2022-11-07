@@ -3,10 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Admin;
+use App\Models\Nurse;
+use App\Models\Doctor;
+use App\Models\Pharmacy;
+use App\Models\Laboratory;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -47,27 +52,27 @@ class User extends Authenticatable
 
     public function admin() 
     {
-        return $this->hasOne('Admin');
+        return $this->hasOne(Admin::class);
     }
 
     public function doctor() 
     {
-        return $this->hasOne('Doctor');
+        return $this->hasOne(Doctor::class);
     }
 
     public function nurse() 
     {
-        return $this->hasOne('Nurse');
+        return $this->hasOne(Nurse::class);
     }
 
-    public function lab() 
+    public function laboratory() 
     {
-        return $this->hasOne('Laboratory');
+        return $this->hasOne(Laboratory::class);
     }
 
-    public function pharm() 
+    public function pharmacy() 
     {
-        return $this->hasOne('Pharmacy');
+        return $this->hasOne(Pharmacy::class);
     }
 
 }

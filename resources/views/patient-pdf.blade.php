@@ -96,10 +96,10 @@
 
                                 <hr>
 
-                                <strong> Patient ID</strong>
+                                <strong> Patient Key</strong>
 
                                 <p class="text-muted">
-                                    {{ $patient_data->patient_id ?? "" }}
+                                    {{ $patient_data->patient_key ?? "" }}
                                 </p>
 
                                 <hr>

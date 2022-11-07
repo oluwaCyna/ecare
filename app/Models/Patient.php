@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PatientRecord\Record;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
 {
@@ -17,11 +18,11 @@ class Patient extends Model
         'height',
         'blood_group',
         'image',
-        'patient_id'
+        'patient_key'
     ];
 
-    public function patient() 
+    public function record() 
     {
-        return $this->hasMany('Record');
+        return $this->hasMany(Record::class);
     }
 }

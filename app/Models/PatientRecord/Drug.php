@@ -2,8 +2,9 @@
 
 namespace App\Models\PatientRecord;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PatientRecord\Appearance;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Drug extends Model
 {
@@ -15,8 +16,8 @@ class Drug extends Model
         'personnel_id'
     ];
 
-    public function drug() 
+    public function appearance() 
     {
-        return $this->belongsTo('Appearance');
+        return $this->belongsTo(Appearance::class);
     }
 }

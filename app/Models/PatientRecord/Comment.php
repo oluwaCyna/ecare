@@ -2,8 +2,9 @@
 
 namespace App\Models\PatientRecord;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PatientRecord\Appearance;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
 {
@@ -15,9 +16,9 @@ class Comment extends Model
         'personnel_id'
     ];
 
-    public function comment() 
+    public function appearance() 
     {
-        return $this->belongsTo('Appearance');
+        return $this->belongsTo(Appearance::class);
     }
 
 }

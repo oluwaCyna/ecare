@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\Models\Patient;
+// use App\Models\Record;
 use Illuminate\Http\Request;
 use App\Models\PatientRecord\Drip;
 use App\Models\PatientRecord\Drug;
 use App\Models\PatientRecord\Scan;
 use App\Models\PatientRecord\Test;
-use Illuminate\Support\Facades\DB;
 use App\Models\PatientRecord\Record;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PatientRequest;
 use App\Models\PatientRecord\Comment;
+// use App\Models\PatientRecord\Patient;
 use App\Http\Requests\IdPatientRequest;
 use App\Models\PatientRecord\Diagnosis;
 use App\Models\PatientRecord\Injection;
@@ -38,10 +40,10 @@ class PatientManagementController extends Controller
     // Load Patient Record
     public function loadCheckRecord(IdPatientRequest $request)
     {
-        session(['patient_id' => $request->patient_id]);
-        $patient_data = DB::table('patients')->where('patient_id', $request->patient_id)->first();
+        session(['patient_key' => $request->patient_key]);
+        $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
         if (empty($patient_data)) {
-            return redirect()->back()->with('error', 'Patient ID not recognized');
+            return redirect()->back()->with('error', 'Patient Key not recognized');
         }else {
             return view('manage-patient.check-record', compact('patient_data'));
         }
@@ -65,7 +67,7 @@ class PatientManagementController extends Controller
             $active_patient = $active_patient;
         }
 
-        $patient_id = "PAT".strtoupper(substr($request->first_name,0,1).substr($request->last_name,0,1)).$active_patient;
+        $patient_key = "PAT".strtoupper(substr($request->first_name,0,1).substr($request->last_name,0,1)).$active_patient;
         $imageName = "";
 
         if($request->image != null && $request->image->isValid())
@@ -84,10 +86,10 @@ class PatientManagementController extends Controller
             'height'=> $request->height,
             'blood_group'=> $request->blood_group,
             'image'=> $imageName,
-            'patient_id'=> $patient_id
+            'patient_key'=> $patient_key
         ]);
-        // session(['patient_id' => $patient_id]);
-        $patient_data = DB::table('patients')->where('patient_id', $patient_id)->first();
+        // session(['patient_key' => $patient_key]);
+        $patient_data = DB::table('patients')->where('patient_key', $patient_key)->first();
         redirect()->back()->with('success', 'Patient sucessfully added');
         return view('manage-patient.check-record', compact('patient_data'));
     }
@@ -100,10 +102,10 @@ class PatientManagementController extends Controller
 
     public function iDPatientLoad(IdPatientRequest $request)
     {
-        // session(['patient_id' => $request->patient_id]);
-        $patient_data = DB::table('patients')->where('patient_id', $request->patient_id)->first();
+        // session(['patient_key' => $request->patient_key]);
+        $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
         if (empty($patient_data)) {
-            return redirect()->back()->with('error', 'Patient ID not recognized');
+            return redirect()->back()->with('error', 'Patient Key not recognized');
         }else {
             return view('manage-patient.edit-patient', compact('patient_data'));
         }
@@ -112,8 +114,8 @@ class PatientManagementController extends Controller
 
     public function updatePatient(IdPatientRequest $request)
     {
-        // $patient_id = session('patient_id');
-        $patient_data = DB::table('patients')->where('patient_id', $request->patient_id)->first();
+        // $patient_key = session('patient_key');
+        $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
             return view('manage-patient.edit-patient', compact('patient_data'));
     }
 
@@ -127,7 +129,7 @@ class PatientManagementController extends Controller
             $request->image->move(public_path('patient-picture'), $imageName);
         }
 
-        Patient::where('patient_id', $request->patient_id)->update([
+        Patient::where('patient_key', $request->patient_key)->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'gender'=> $request->gender,
@@ -150,8 +152,8 @@ class PatientManagementController extends Controller
      // Generate PDF
      public function createPDF() {
         // retreive all records from auth
-        $patient_id = session('patient_id');
-        $patient_data = DB::table('patients')->where('patient_id', $patient_id)->first();
+        $patient_key = session('patient_key');
+        $patient_data = DB::table('patients')->where('patient_key', $patient_key)->first();
         // share data to view
         $pdf = PDF::loadView('patient-pdf',compact(['patient_data']));
         // download PDF file with download method
@@ -170,11 +172,12 @@ class PatientManagementController extends Controller
         $id = Auth::user()->id;
         $personnel = DB::table('doctors')->where('user_id', $id)->first();
 
-        $patient_data = DB::table('patients')->where('patient_id', $request->patient_id)->first();
+        $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
         $date = date("l, jS F, Y. h:i:s A");
         $title = $patient_data->first_name.$patient_data->last_name." - ".$date;
         Record::create([
-            'patient_id' => $request->patient_id,
+            'patient_key' => $patient_data->id,
+            'patient_key' => $request->patient_key,
             'title' => $title,
             'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
             'personnel_id' => $personnel->personnel_id

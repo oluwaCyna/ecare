@@ -54,16 +54,16 @@
                                 @csrf
 
                                 <div class="row mb-3">
-                                    <label for="patient_id"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Patient ID') }}</label>
+                                    <label for="patient_key"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('Patient Key') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="patient_id" type="text"
-                                            class="form-control @error('patient_id') is-invalid @enderror" name="patient_id"
-                                            value="{{ $user->patient_id ?? old('patient_id') }}" autocomplete="patient_id"
+                                        <input id="patient_key" type="text"
+                                            class="form-control @error('patient_key') is-invalid @enderror" name="patient_key"
+                                            value="{{ $user->patient_key ?? old('patient_key') }}" autocomplete="patient_key"
                                             autofocus>
 
-                                        @error('patient_id')
+                                        @error('patient_key')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -110,7 +110,7 @@
                         </div>
                         <!-- /.card-header -->
                         @php
-                        if (session('patient_id')) {
+                        if (session('patient_key')) {
                         echo ('<div class="card-tools mt-1">
                         <a id="download" type="button" class="btn btn-primary" href="check-record/pdf">Download Info</a>
                         </div>'); }
@@ -186,10 +186,10 @@
 
                                         <hr>
 
-                                        <strong> Patient ID</strong>
+                                        <strong> Patient Key</strong>
 
                                         <p class="text-muted">
-                                            {{ $patient_data->patient_id ?? "" }}
+                                            {{ $patient_data->patient_key ?? "" }}
                                         </p>
 
                                         <hr>
@@ -280,7 +280,7 @@
                                                         <div class="card-body">
                                                           <dl class="row">
                                                             <dt class="col-sm-4">Comment</dt>
-                                                            <dd class="col-sm-8">A description list is perfect for defining terms.</dd>
+                                                            <dd class="col-sm-8">A description list is perfect for defining terms. <a class="text-danger" href="/comment/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
                                                             <dt class="col-sm-4">Diagnosis</dt>
                                                             <dd class="col-sm-8">Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
                                                             <dd class="col-sm-8 offset-sm-4">Donec id elit non mi porta gravida at eget metus.</dd>

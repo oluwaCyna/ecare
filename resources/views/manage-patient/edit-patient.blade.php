@@ -141,12 +141,12 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="patient_id" class="col-md-4 col-form-label text-md-end">{{ __('Patient ID') }}</label>
+                                    <label for="patient_key" class="col-md-4 col-form-label text-md-end">{{ __('Patient Key') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="patient_id" type="text" class="form-control @error('patient_id') is-invalid @enderror" name="patient_id" value="{{ $patient_data->patient_id ?? old('patient_id') }}" readonly>
+                                        <input id="patient_key" type="text" class="form-control @error('patient_key') is-invalid @enderror" name="patient_key" value="{{ $patient_data->patient_key ?? old('patient_key') }}" readonly>
         
-                                        @error('patient_id')
+                                        @error('patient_key')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

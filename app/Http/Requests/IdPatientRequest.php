@@ -24,7 +24,7 @@ class IdPatientRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_id' => ['required']
+            'patient_key' => ['required']
         ];
     }
 }

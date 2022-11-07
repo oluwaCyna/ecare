@@ -122,6 +122,8 @@ Route::put('/portal/update-daily', [App\Http\Controllers\PatientManagementContro
 
 // Route::post('/portal/add-record', [App\Http\Controllers\PatientManagementController::class, 'saveAddRecord'])->name('patient.record.store');
 
+//Delete Patient Record data
+Route::get('/comment/{id}', [App\Http\Controllers\PatientManagementController::class, 'deleteComment'])->name('comment.delete');
 
 
 
