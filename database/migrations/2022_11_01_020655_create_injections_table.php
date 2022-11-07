@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('appearance_id');
             $table->string('appearance_title');
-            $table->string('injection');
+            $table->string('injection')->nullable();
             $table->string('personnel_name');
             $table->string('personnel_id');
             $table->timestamps();

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('appearance_id');
             $table->string('appearance_title');
-            $table->string('drug');
+            $table->string('drug')->nullable();
             $table->string('personnel_name');
             $table->string('personnel_id');
             $table->timestamps();

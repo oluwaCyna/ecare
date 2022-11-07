@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\Models\Patient;
-// use App\Models\Record;
 use Illuminate\Http\Request;
 use App\Models\PatientRecord\Drip;
 use App\Models\PatientRecord\Drug;
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PatientRequest;
 use App\Models\PatientRecord\Comment;
-// use App\Models\PatientRecord\Patient;
 use App\Http\Requests\IdPatientRequest;
 use App\Models\PatientRecord\Diagnosis;
 use App\Models\PatientRecord\Injection;
@@ -41,11 +39,13 @@ class PatientManagementController extends Controller
     public function loadCheckRecord(IdPatientRequest $request)
     {
         session(['patient_key' => $request->patient_key]);
-        $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
+        // $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
+        $patient_data = Patient::where('patient_key', $request->patient_key)->first();
+        // dd($patient_data->record[0]->appearance[0]->comment);
         if (empty($patient_data)) {
             return redirect()->back()->with('error', 'Patient Key not recognized');
         }else {
-            return view('manage-patient.check-record', compact('patient_data'));
+            return view('manage-patient.record', compact('patient_data'));
         }
     }
 
@@ -194,6 +194,7 @@ class PatientManagementController extends Controller
         ]);
 
         $patient_appearance = DB::table('appearances')->where('title', 'General')->first();
+        if (!empty($request->comment)) {
         $comment = explode("|", $request->comment);
         foreach ($comment as $comment) {
             Comment::create([
@@ -204,7 +205,9 @@ class PatientManagementController extends Controller
                 'personnel_id' => $personnel->personnel_id
             ]);
         }
+        }
 
+        if (!empty($request->diagnosis)) {
         $diagnosis = explode("|", $request->diagnosis);
         foreach ($diagnosis as $diagnosis) {
             Diagnosis::create([
@@ -215,7 +218,9 @@ class PatientManagementController extends Controller
                 'personnel_id' => $personnel->personnel_id
             ]);
         }
+        }
 
+        if (!empty($request->test)) {
         $test = explode(",", $request->test);
         foreach ($test as $test) {
             Test::create([
@@ -226,7 +231,9 @@ class PatientManagementController extends Controller
                 'personnel_id' => $personnel->personnel_id
             ]);
         }
+        }
 
+        if (!empty($request->scan)) {
         $scan = explode(",", $request->scan);
         foreach ($scan as $scan) {
             Scan::create([
@@ -237,7 +244,9 @@ class PatientManagementController extends Controller
                 'personnel_id' => $personnel->personnel_id
             ]);
         }
+        }
 
+        if (!empty($request->drip)) {
         $drip = explode(",", $request->drip);
         foreach ($drip as $drip) {
             Drip::create([
@@ -248,7 +257,9 @@ class PatientManagementController extends Controller
                 'personnel_id' => $personnel->personnel_id
             ]);
         }
+        }
 
+        if (!empty($request->drug)) {
         $drug = explode(",", $request->drug);
         foreach ($drug as $drug) {
             Drug::create([
@@ -259,7 +270,9 @@ class PatientManagementController extends Controller
                 'personnel_id' => $personnel->personnel_id
             ]);
         }
+        }
 
+        if (!empty($request->injection)) {
         $injection = explode(",", $request->injection);
         foreach ($injection as $injection) {
             Injection::create([
@@ -269,6 +282,7 @@ class PatientManagementController extends Controller
                 'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
                 'personnel_id' => $personnel->personnel_id
             ]);
+        }
         }
 
         return view('manage-patient.doctor.add-record')->with('success', 'Patient record has been saved successfuly');
