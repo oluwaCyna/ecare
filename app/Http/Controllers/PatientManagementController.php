@@ -91,7 +91,7 @@ class PatientManagementController extends Controller
         // session(['patient_key' => $patient_key]);
         $patient_data = DB::table('patients')->where('patient_key', $patient_key)->first();
         redirect()->back()->with('success', 'Patient sucessfully added');
-        return view('manage-patient.check-record', compact('patient_data'));
+        return view('manage-patient.record', compact('patient_data'));
     }
 
     // Update Patient
@@ -176,7 +176,7 @@ class PatientManagementController extends Controller
         $date = date("l, jS F, Y. h:i:s A");
         $title = $patient_data->first_name.$patient_data->last_name." - ".$date;
         Record::create([
-            'patient_key' => $patient_data->id,
+            'patient_id' => $patient_data->id,
             'patient_key' => $request->patient_key,
             'title' => $title,
             'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
