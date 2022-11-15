@@ -4,7 +4,7 @@ namespace App\Http\Requests\Record;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DailyRequest extends FormRequest
+class DoctorGeneralUpdaterequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

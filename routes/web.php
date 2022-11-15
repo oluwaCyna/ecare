@@ -108,8 +108,8 @@ Route::get('/portal/check-record/pdf', [App\Http\Controllers\PatientManagementCo
 Route::get('/portal/general', [App\Http\Controllers\PatientManagementController::class, 'addRecordDoctor'])->name('general.record.create');
 Route::post('/portal/general', [App\Http\Controllers\PatientManagementController::class, 'saveRecordDoctor'])->name('general.record.store');
 
-Route::get('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'updateRecordDoctor'])->name('general.record.update');
-Route::post('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'saveUpdateRecordDoctor'])->name('general.record.update.store');
+Route::get('/portal/update/{appearance_id}', [App\Http\Controllers\PatientManagementController::class, 'updateRecordDoctor'])->name('general.record.update');
+Route::post('/portal/update', [App\Http\Controllers\PatientManagementController::class, 'saveUpdateRecordDoctor'])->name('general.record.update.store');
 
 Route::get('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'updateGeneralNurse'])->name('general.nurse.update');
 Route::post('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'saveupdateGeneralNurse'])->name('general.nurse.update.store');
@@ -123,7 +123,7 @@ Route::put('/portal/update-daily', [App\Http\Controllers\PatientManagementContro
 // Route::post('/portal/add-record', [App\Http\Controllers\PatientManagementController::class, 'saveAddRecord'])->name('patient.record.store');
 
 //Delete Patient Record data
-Route::get('/comment/{id}', [App\Http\Controllers\PatientManagementController::class, 'deleteComment'])->name('comment.delete');
+Route::delete('/patient-data/delete', [App\Http\Controllers\RecordDataController::class, 'deletePatientData'])->name('data.delete');
 
 
 

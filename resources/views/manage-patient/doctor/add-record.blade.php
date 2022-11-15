@@ -52,7 +52,7 @@
 
                                 <div class="row mb-3">
                                     <label for="patient_key"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Patint ID') }}</label>
+                                        class="col-md-4 col-form-label text-md-end">{{ __('Patient ID') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="patient_key" type="text"

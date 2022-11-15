@@ -29,10 +29,13 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
+                        <div class="card-header bg-warning">{{ __('Edit without adding new entries, they won\'t be saved if you do. To add new entries, use the designated button') }}</div>
                         <div class="card-header">{{ __('Add New Record') }}</div>
 
                         <div class="card-body">
-
+                                {{-- @php 
+                                    echo($patient_record['comment']);
+                                    dd($patient_record)@endphp --}}
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,10 +60,29 @@
                                     <div class="col-md-6">
                                        
                                     <textarea class="form-control @error('comment') is-invalid @enderror" name="comment"
-                                        value="{{ $user->comment ?? old('comment') }}" autocomplete="comment"
-                                        autofocus rows="3"></textarea>
+                                        autocomplete="comment"
+                                        autofocus rows="3">{{ $patient_record['comment'] ?? old('comment') }}</textarea>
 
                                         @error('comment')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-comment">Add New Comment(s)</a></small><small><a href="" id="hide-new-comment">Hide New Comment(s)</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-comment">
+                                    <label for="new_comment"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Comment(s)') }}</label>
+
+                                    <div class="col-md-6">
+                                       
+                                    <textarea class="form-control @error('new_comment') is-invalid @enderror" name="new_comment"
+                                        autocomplete="new_comment"
+                                        autofocus rows="3">{{ old('new_comment') }}</textarea>
+
+                                        @error('new_comment')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -75,10 +97,28 @@
 
                                     <div class="col-md-6">
                                         <textarea class="form-control @error('diagnosis') is-invalid @enderror" name="diagnosis"
-                                        value="{{ $user->diagnosis ?? old('diagnosis') }}" autocomplete="diagnosis"
-                                        autofocus rows="3"></textarea>
+                                        autocomplete="diagnosis"
+                                        autofocus rows="3">{{ $patient_record['diagnosis'] ?? old('diagnosis') }}</textarea>
 
                                         @error('diagnosis')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-diagnosis">Add New Diagnosis</a></small><small><a href="" id="hide-new-diagnosis">Hide New Diagnosis</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-diagnosis">
+                                    <label for="new_diagnosis"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Diagnosis') }}</label>
+
+                                    <div class="col-md-6">
+                                        <textarea class="form-control @error('new_diagnosis') is-invalid @enderror" name="new_diagnosis"
+                                        autocomplete="new_diagnosis"
+                                        autofocus rows="3">{{ old('new_diagnosis') }}</textarea>
+
+                                        @error('new_diagnosis')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -92,11 +132,27 @@
                                         class="col-md-4 col-form-label text-md-end">{{ __('Test(s)') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea class="form-control @error('test') is-invalid @enderror" name="test"
-                                        value="{{ $user->test ?? old('test') }}" autocomplete="test"
-                                        autofocus rows="2"></textarea>
+                                        <textarea class="form-control @error('test') is-invalid @enderror" name="test" autocomplete="test"
+                                        autofocus rows="2">{{ $patient_record['test'] ?? old('test') }}</textarea>
 
                                         @error('test')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-test">Add New Test(s)</a></small><small><a href="" id="hide-new-test">Hide New Test(s)</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-test">
+                                    <label for="new_test"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Test(s)') }}</label>
+
+                                    <div class="col-md-6">
+                                        <textarea class="form-control @error('new_test') is-invalid @enderror" name="new_test" autocomplete="new_test"
+                                        autofocus rows="2">{{ old('new_test') }}</textarea>
+
+                                        @error('new_test')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -110,11 +166,27 @@
                                         class="col-md-4 col-form-label text-md-end">{{ __('Scan(s)') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea class="form-control @error('scan') is-invalid @enderror" name="scan"
-                                        value="{{ $user->scan ?? old('scan') }}" autocomplete="scan"
-                                        autofocus rows="2"></textarea>
+                                        <textarea class="form-control @error('scan') is-invalid @enderror" name="scan" autocomplete="scan"
+                                        autofocus rows="2">{{ $patient_record['scan'] ?? old('scan') }}</textarea>
 
                                         @error('scan')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-scan">Add New Scan(s)</a></small><small><a href="" id="hide-new-scan">Hide New Scan(s)</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-scan">
+                                    <label for="new_scan"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Scan(s)') }}</label>
+
+                                    <div class="col-md-6">
+                                        <textarea class="form-control @error('new_scan') is-invalid @enderror" name="new_scan" autocomplete="new_scan"
+                                        autofocus rows="2">{{ old('new_scan') }}</textarea>
+
+                                        @error('new_scan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -128,11 +200,27 @@
                                         class="col-md-4 col-form-label text-md-end">{{ __('Drip(s)') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea class="form-control @error('drip') is-invalid @enderror" name="drip"
-                                        value="{{ $user->drip ?? old('drip') }}" autocomplete="drip"
-                                        autofocus rows="2"></textarea>
+                                        <textarea class="form-control @error('drip') is-invalid @enderror" name="drip" autocomplete="drip"
+                                        autofocus rows="2">{{ $patient_record['drip'] ?? old('drip') }}</textarea>
 
                                         @error('drip')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-drip">Add New Drip(s)</a></small><small><a href="" id="hide-new-drip">Hide New Drip(s)</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-drip">
+                                    <label for="new_drip"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Drip(s)') }}</label>
+
+                                    <div class="col-md-6">
+                                        <textarea class="form-control @error('new_drip') is-invalid @enderror" name="new_drip" autocomplete="new_drip"
+                                        autofocus rows="2">{{ old('new_drip') }}</textarea>
+
+                                        @error('new_drip')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -146,11 +234,27 @@
                                         class="col-md-4 col-form-label text-md-end">{{ __('Drug(s)') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea class="form-control @error('drug') is-invalid @enderror" name="drug"
-                                        value="{{ $user->drug ?? old('drug') }}" autocomplete="drug"
-                                        autofocus rows="2"></textarea>
+                                        <textarea class="form-control @error('drug') is-invalid @enderror" name="drug" autocomplete="drug"
+                                        autofocus rows="2">{{ $patient_record['drug'] ?? old('drug') }}</textarea>
 
                                         @error('drug')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-drug">Add New Drug(s)</a></small><small><a href="" id="hide-new-drug">Hide New Drug(s)</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-drug">
+                                    <label for="new_drug"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Drug(s)') }}</label>
+
+                                    <div class="col-md-6">
+                                        <textarea class="form-control @error('drug') is-invalid @enderror" name="new_drug" autocomplete="new_drug"
+                                        autofocus rows="2">{{ old('new_drug') }}</textarea>
+
+                                        @error('new_drug')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -164,11 +268,27 @@
                                         class="col-md-4 col-form-label text-md-end">{{ __('Injection(s)') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea class="form-control @error('injection') is-invalid @enderror" name="injection"
-                                        value="{{ $user->injection ?? old('injection') }}" autocomplete="injection"
-                                        autofocus rows="2"></textarea>
+                                        <textarea class="form-control @error('injection') is-invalid @enderror" name="injection" autocomplete="injection"
+                                        autofocus rows="2">{{ $patient_record['injection'] ?? old('injection') }}</textarea>
 
                                         @error('injection')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <small><a href="" id="add-new-injection">Add New Injection(s)</a></small><small><a href="" id="hide-new-injection">Hide New Injection(s)</a></small>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" id="new-injection">
+                                    <label for="new_injection"
+                                        class="col-md-4 col-form-label text-md-end">{{ __('New Injection(s)') }}</label>
+
+                                    <div class="col-md-6">
+                                        <textarea class="form-control @error('new_injection') is-invalid @enderror" name="new_injection" autocomplete="new_injection"
+                                        autofocus rows="2">{{ old('new_injection') }}</textarea>
+
+                                        @error('new_injection')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -177,10 +297,12 @@
                                     </div>
                                 </div>
 
+                                <input type="hidden" name="appearance_id" value="{{ $patient_record['appearance_id'] }}">
+
                                 <div class="row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
-                                            {{ __('Add Record') }}
+                                            {{ __('Update Record') }}
                                         </button>
                                     </div>
                                 </div>
@@ -193,7 +315,8 @@
         </div>
         {{-- </div> --}}
         <!-- /.content-wrapper -->
-    @endsection
+@endsection
 
-    @section('script')
-    @endsection
+@section('script')
+<script src="{{ asset('js/general-update.js') }}"></script>
+@endsection

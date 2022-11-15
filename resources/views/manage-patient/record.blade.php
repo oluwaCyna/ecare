@@ -212,13 +212,14 @@
                                                     <!-- General -->
                                                     @foreach ($record->appearance as $appearance)
                                                     <div class="card">
-                                                        <div class="card-header">
+                                                        <div class="card-header d-flex justify-between">
                                                             <h4 class="card-title w-100">
                                                                 <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
                                                                   <i class="fas fa-text-width"></i>
                                                                   {{ $appearance->title ?? 'PlaceHolder001' }}
                                                                 </a>
                                                             </h4>
+                                                            <a class="btn btn-primary" href="/portal/update/{{$appearance->id}}">Edit</a>
                                                           {{-- <h3 class="card-title">
                                                             <i class="fas fa-text-width"></i>
                                                             General
@@ -233,9 +234,24 @@
                                                             <dt class="col-sm-4">Comment</dt>
                                                             @foreach ($appearance->comment as $comment)
                                                                 @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$comment->comment ?? ""}} <a class="text-danger" href="/comment/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
+                                                                <dd class="col-sm-7">{{$comment->comment ?? ""}}</dd>
+                                                                <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                
+                                                                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                                                                    <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                                </form>
+
                                                                 @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$comment->comment ?? ""}} <a class="text-danger" href="/comment/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
+                                                                <dd class="col-sm-7 offset-sm-4">{{$comment->comment ?? ""}}</dd>
+                                                                <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                    @method('delete')
+                                                                    @csrf
+                                                
+                                                                    <input type="hidden" name="comment_id" value="{{$comment->id}}">
+                                                                    <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                                </form>
                                                                 @endif
                                                             @endforeach
                                                             @endif
@@ -243,99 +259,234 @@
                                                             @if($appearance->diagnosis->count() > 0)
                                                             <dt class="col-sm-4">Diagnosis</dt>
                                                             @foreach ($appearance->diagnosis as $diagnosis)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$diagnosis->diagnosis ?? ""}} <a class="text-danger" href="/diagnosis/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$diagnosis->diagnosis ?? ""}} <a class="text-danger" href="/diagnosis/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$diagnosis->diagnosis ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="diagnosis_id" value="{{$diagnosis->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$diagnosis->diagnosis ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="diagnosis_id" value="{{$diagnosis->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->treatment->count() > 0)
                                                             <dt class="col-sm-4">Treatment</dt>
                                                             @foreach ($appearance->treatment as $treatment)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$treatment->treatment ?? ""}} <a class="text-danger" href="/treatment/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$treatment->treatment ?? ""}} <a class="text-danger" href="/treatment/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$treatment->treatment ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="treatment_id" value="{{$treatment->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$treatment->treatment ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="treatment_id" value="{{$treatment->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->test->count() > 0)
                                                             <dt class="col-sm-4">Tests</dt>
                                                             @foreach ($appearance->test as $test)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$test->test ?? ""}} <a class="text-danger" href="/test/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$test->test ?? ""}} <a class="text-danger" href="/test/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$test->test ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="test_id" value="{{$test->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$test->test ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="test_id" value="{{$test->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->test_result->count() > 0)
                                                             <dt class="col-sm-4">Tests Result</dt>
                                                             @foreach ($appearance->test_result as $test_result)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$test_result->test_result ?? ""}} <a class="text-danger" href="/test-result/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$test_result->test_result ?? ""}} <a class="text-danger" href="/test-result/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$test_result->test_result ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="test_result_id" value="{{$test_result->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$test_result->test_result ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="test_result_id" value="{{$test_result->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->scan->count() > 0)
                                                             <dt class="col-sm-4">Scans</dt>
                                                             @foreach ($appearance->scan as $scan)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$scan->scan ?? ""}} <a class="text-danger" href="/scan/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$scan->scan ?? ""}} <a class="text-danger" href="/scan/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$scan->scan ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="scan_id" value="{{$scan->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$scan->scan ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="scan_id" value="{{$scan->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->scan_result->count() > 0)
                                                             <dt class="col-sm-4">Scans Result</dt>
                                                             @foreach ($appearance->scan_result as $scan_result)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$scan_result->scan_result ?? ""}} <a class="text-danger" href="/scan-result/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$scan_result->scan_result ?? ""}} <a class="text-danger" href="/scan-result/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$scan_result->scan_result ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="scan_result_id" value="{{$scan_result->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$scan_result->scan_result ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="scan_result_id" value="{{$scan_result->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->drug->count() > 0)
                                                             <dt class="col-sm-4">Drugs</dt>
                                                             @foreach ($appearance->drug as $drug)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$drug->drug ?? ""}} <a class="text-danger" href="/drug/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$drug->drug ?? ""}} <a class="text-danger" href="/drug/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$drug->drug ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="drug_id" value="{{$drug->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$drug->drug ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="drug_id" value="{{$drug->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->drug_available->count() > 0)
                                                             <dt class="col-sm-4">Drugs Available</dt>
                                                             @foreach ($appearance->drug_available as $drug_available)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$drug->drug ?? ""}} <a class="text-danger" href="/drug-available/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$drug_available->drug_available ?? ""}} <a class="text-danger" href="/drug-available/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$drug_available->drug_available ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="drug_available_id" value="{{$drug_available->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$drug_available->drug_available ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="drug_available_id" value="{{$drug_available->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
 
                                                             @if($appearance->injection->count() > 0)
                                                             <dt class="col-sm-4">Injections</dt>
                                                             @foreach ($appearance->injection as $injection)
-                                                                @if ($loop->first)
-                                                                <dd class="col-sm-8">{{$injection->injection ?? ""}} <a class="text-danger" href="/injection/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @else
-                                                                <dd class="col-sm-8 offset-sm-4">{{$injection->injection ?? ""}} <a class="text-danger" href="/injection/{id}"><i class="fa-solid fa-trash text-danger"></i></a></dd>
-                                                                @endif
+                                                            @if ($loop->first)
+                                                            <dd class="col-sm-7">{{$injection->injection ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="injection_id" value="{{$injection->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+
+                                                            @else
+                                                            <dd class="col-sm-7 offset-sm-4">{{$injection->injection ?? ""}}</dd>
+                                                            <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
+                                                                @method('delete')
+                                                                @csrf
+                                            
+                                                                <input type="hidden" name="injection_id" value="{{$injection->id}}">
+                                                                <button type="submit" class="btn"><i class="fa-solid fa-trash text-danger"></i></button>
+                                                            </form>
+                                                            @endif
                                                             @endforeach
                                                             @endif
                                                           </dl>
