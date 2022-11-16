@@ -211,6 +211,27 @@
 
                                                     <!-- General -->
                                                     @foreach ($record->appearance as $appearance)
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="UploadModal{{ $appearance->id }}" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <a href="/portal/upload-test/{{ $appearance->id }}" class="btn btn-primary">Add Test Result</a>
+                                                                <a href="/portal/upload-scan/{{ $appearance->id }}" class="btn btn-primary">Add Scan Result</a>
+                                                                <a href="{{route('upload.drug.nurse')}}" class="btn btn-primary">Add/Update Others</a>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="card">
                                                         <div class="card-header d-flex justify-between">
                                                             <h4 class="card-title w-100">
@@ -219,6 +240,7 @@
                                                                   {{ $appearance->title ?? 'PlaceHolder001' }}
                                                                 </a>
                                                             </h4>
+                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UploadModal{{ $appearance->id }}">Update</button>
                                                             <a class="btn btn-primary" href="/portal/update/{{$appearance->id}}">Edit</a>
                                                           {{-- <h3 class="card-title">
                                                             <i class="fas fa-text-width"></i>
@@ -338,7 +360,7 @@
                                                             <dt class="col-sm-4">Tests Result</dt>
                                                             @foreach ($appearance->test_result as $test_result)
                                                             @if ($loop->first)
-                                                            <dd class="col-sm-7">{{$test_result->test_result ?? ""}}</dd>
+                                                            <dd class="col-sm-7"><a href="{{ asset('test-result/'.$test_result->test_result) }}" target="_blank"><i class="fa-regular fa-file-pdf"></i>{{" ".$test_result->test_result ?? ""}}</a></dd>
                                                             <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
                                                                 @method('delete')
                                                                 @csrf
@@ -348,7 +370,7 @@
                                                             </form>
 
                                                             @else
-                                                            <dd class="col-sm-7 offset-sm-4">{{$test_result->test_result ?? ""}}</dd>
+                                                            <dd class="col-sm-7 offset-sm-4"><a href="{{ asset('test-result/'.$test_result->test_result) }}" target="_blank"><i class="fa-regular fa-file-pdf"></i>{{" ".$test_result->test_result ?? ""}}</a></dd>
                                                             <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
                                                                 @method('delete')
                                                                 @csrf
@@ -390,7 +412,7 @@
                                                             <dt class="col-sm-4">Scans Result</dt>
                                                             @foreach ($appearance->scan_result as $scan_result)
                                                             @if ($loop->first)
-                                                            <dd class="col-sm-7">{{$scan_result->scan_result ?? ""}}</dd>
+                                                            <dd class="col-sm-7"><a href="{{ asset('scan-result/'.$scan_result->scan_result) }}" target="_blank"><i class="fa-regular fa-file-pdf"></i>{{" ".$scan_result->scan_result ?? ""}}</a></dd>
                                                             <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
                                                                 @method('delete')
                                                                 @csrf
@@ -400,7 +422,7 @@
                                                             </form>
 
                                                             @else
-                                                            <dd class="col-sm-7 offset-sm-4">{{$scan_result->scan_result ?? ""}}</dd>
+                                                            <dd class="col-sm-7 offset-sm-4"><a href="{{ asset('scan-result/'.$scan_result->scan_result) }}" target="_blank"><i class="fa-regular fa-file-pdf"></i>{{" ".$scan_result->scan_result ?? ""}}</a></dd>
                                                             <form action="{{route('data.delete')}}" method="post" class="col-sm-1">
                                                                 @method('delete')
                                                                 @csrf
@@ -526,6 +548,8 @@
                 <!-- /.col -->
             </div>
         </div>
+
+
     </section>
     {{-- </div> --}}
     <!-- /.content-wrapper -->

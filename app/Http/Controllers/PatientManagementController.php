@@ -18,9 +18,15 @@ use App\Http\Requests\IdPatientRequest;
 use App\Models\PatientRecord\Diagnosis;
 use App\Models\PatientRecord\Injection;
 use App\Models\PatientRecord\Appearance;
+use App\Models\PatientRecord\ScanResult;
+use App\Models\PatientRecord\TestResult;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Requests\Record\GeneralRequest;
+use App\Http\Requests\Record\UploadScanResult;
+use App\Http\Requests\Record\UploadTestResult;
 use App\Http\Requests\Record\DoctorGeneralUpdaterequest;
+use App\Http\Requests\Record\UploadDrugAvailable;
+use App\Models\PatientRecord\DrugAvailable;
 
 class PatientManagementController extends Controller
 {
@@ -452,7 +458,7 @@ class PatientManagementController extends Controller
 
         $patient_appearance = Appearance::where('id', $request->appearance_id)->first();
         if (!empty($request->new_comment)) {
-        $comment = explode("|", $request->comment);
+        $comment = explode("|", $request->new_comment);
         foreach ($comment as $comment) {
             Comment::create([
                 'appearance_id' => $patient_appearance->id,
@@ -465,7 +471,7 @@ class PatientManagementController extends Controller
         }
 
         if (!empty($request->new_diagnosis)) {
-        $diagnosis = explode("|", $request->diagnosis);
+        $diagnosis = explode("|", $request->new_diagnosis);
         foreach ($diagnosis as $diagnosis) {
             Diagnosis::create([
                 'appearance_id' => $patient_appearance->id,
@@ -478,7 +484,7 @@ class PatientManagementController extends Controller
         }
 
         if (!empty($request->new_test)) {
-        $test = explode(",", $request->test);
+        $test = explode(",", $request->new_test);
         foreach ($test as $test) {
             Test::create([
                 'appearance_id' => $patient_appearance->id,
@@ -491,7 +497,7 @@ class PatientManagementController extends Controller
         }
 
         if (!empty($request->new_scan)) {
-        $scan = explode(",", $request->scan);
+        $scan = explode(",", $request->new_scan);
         foreach ($scan as $scan) {
             Scan::create([
                 'appearance_id' => $patient_appearance->id,
@@ -504,7 +510,7 @@ class PatientManagementController extends Controller
         }
 
         if (!empty($request->new_drip)) {
-        $drip = explode(",", $request->drip);
+        $drip = explode(",", $request->new_drip);
         foreach ($drip as $drip) {
             Drip::create([
                 'appearance_id' => $patient_appearance->id,
@@ -517,7 +523,7 @@ class PatientManagementController extends Controller
         }
 
         if (!empty($request->new_drug)) {
-        $drug = explode(",", $request->drug);
+        $drug = explode(",", $request->new_drug);
         foreach ($drug as $drug) {
             Drug::create([
                 'appearance_id' => $patient_appearance->id,
@@ -546,10 +552,99 @@ class PatientManagementController extends Controller
         return view('manage-patient.record', compact('patient_data'));
     }
 
+    //Modal Upload links
+    public function uploadTestNurse($appearance_id)
+    {
+        return view('manage-patient.nurse.upload-test', compact('appearance_id'));
+    }
+    
+    public function saveUploadTestNurse(UploadTestResult $request)
+    {
+        //Add New
+        $id = Auth::user()->id;
+        $personnel = DB::table('nurses')->where('user_id', $id)->first();
+        $patient_appearance = Appearance::where('id', $request->appearance_id)->first();
+        if($request->hasfile('test'))
+        {
+            foreach($request->file('test') as $file)
+            {
+                $testName = $file->getClientOriginalName();
+                $file->move(public_path('test-result'), $testName); 
+            TestResult::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'test_result' => $testName,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+            }
+        }
+        return view('manage-patient.check-record')->with('success', 'Test Result uploaded successfuly');
+    }
+    
+    public function uploadScanNurse($appearance_id)
+    {
+        return view('manage-patient.nurse.upload-scan', compact('appearance_id'));
+    }
+
+    public function saveUploadScanNurse(UploadScanResult $request)
+    {
+        //Add New
+        $id = Auth::user()->id;
+        $personnel = DB::table('nurses')->where('user_id', $id)->first();
+        $patient_appearance = Appearance::where('id', $request->appearance_id)->first();
+        if($request->hasfile('scan'))
+        {
+            foreach($request->file('scan') as $file)
+            {
+                $scanName = $file->getClientOriginalName();
+                $file->move(public_path('scan-result'), $scanName); 
+            ScanResult::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'scan_result' => $scanName,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+            }
+        }
+        return view('manage-patient.check-record')->with('success', 'Scan Result uploaded successfuly');
+    }
+
+    // public function uploadDrugNurse()
+    // {
+    //     return view('manage-patient.nurse.upload-drug');
+    // }
+
+    // public function saveUploadScanNurse(UploadDrugAvailable $request, $appearance_id)
+    // {
+    //     dd($request);
+    //     //Add New
+    //     $id = Auth::user()->id;
+    //     $personnel = DB::table('nurse')->where('user_id', $id)->first();
+    //     $patient_appearance = Appearance::where('id', $appearance_id)->first();
+    //     if($request->hasfile('drug'))
+    //     {
+    //         foreach($request->file('drug') as $file)
+    //         {
+    //             $drugName = $file->getClientOriginalName();
+    //             $file->move(public_path('drug-available'), $drugName); 
+    //         DrugAvailable::create([
+    //             'appearance_id' => $patient_appearance->id,
+    //             'appearance_title' => $patient_appearance->title,
+    //             'drug_available' => $drugName,
+    //             'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+    //             'personnel_id' => $personnel->personnel_id
+    //         ]);
+    //         }
+    //     }
+    //     return view('manage-patient.nurse.upload-drug')->with('success', 'Drug uploaded successfuly');
+    // }
     // Edit Patient General Record by Nurse
     public function updateGeneralNurse()
     {
-        return view('manage-patient.nurse.edit-record');
+        $patient_data = DB::table('patients')->where('patient_key', 'PATMA001')->first();
+        return view('manage-patient.nurse.edit-record', compact('patient_data'));
     }
 
     // Edit Patient General Record by Nurse

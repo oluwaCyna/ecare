@@ -111,6 +111,15 @@ Route::post('/portal/general', [App\Http\Controllers\PatientManagementController
 Route::get('/portal/update/{appearance_id}', [App\Http\Controllers\PatientManagementController::class, 'updateRecordDoctor'])->name('general.record.update');
 Route::post('/portal/update', [App\Http\Controllers\PatientManagementController::class, 'saveUpdateRecordDoctor'])->name('general.record.update.store');
 
+Route::get('/portal/upload-test/{appearance_id}', [App\Http\Controllers\PatientManagementController::class, 'uploadTestNurse'])->name('upload.test.nurse');
+Route::post('/portal/upload-test', [App\Http\Controllers\PatientManagementController::class, 'saveUploadTestNurse'])->name('upload.test.nurse.store');
+
+Route::get('/portal/upload-scan/{appearance_id}', [App\Http\Controllers\PatientManagementController::class, 'uploadScanNurse'])->name('upload.scan.nurse');
+Route::post('/portal/upload-scan', [App\Http\Controllers\PatientManagementController::class, 'saveUploadScanNurse'])->name('upload.scan.nurse.store');
+
+Route::get('/portal/upload-drug', [App\Http\Controllers\PatientManagementController::class, 'uploadScanNurse'])->name('upload.scan.nurse');
+Route::get('/portal/upload-drug', [App\Http\Controllers\PatientManagementController::class, 'uploadDrugNurse'])->name('upload.drug.nurse');
+
 Route::get('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'updateGeneralNurse'])->name('general.nurse.update');
 Route::post('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'saveupdateGeneralNurse'])->name('general.nurse.update.store');
 

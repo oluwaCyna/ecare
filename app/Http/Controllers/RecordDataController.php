@@ -38,7 +38,9 @@ class RecordDataController extends Controller
                 break;
 
             case 'test_result_id':
-                TestResult::where('id', $request->test_result_id)->firstorfail()->delete();
+                $pdf_delete = TestResult::where('id', $request->test_result_id)->firstorfail();
+                unlink(public_path('test-result/'.$pdf_delete->test_result));
+                $pdf_delete->delete();
                 break;
 
             case 'scan_id':
@@ -46,7 +48,9 @@ class RecordDataController extends Controller
                 break;
 
             case 'scan_result_id':
-                ScanResult::where('id', $request->scan_result_id)->firstorfail()->delete();
+                $pdf_delete = ScanResult::where('id', $request->scan_result_id)->firstorfail();
+                unlink(public_path('scan-result/'.$pdf_delete->scan_result));
+                $pdf_delete->delete();
                 break;
             
             case 'drug_id':
