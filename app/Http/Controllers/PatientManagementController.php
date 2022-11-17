@@ -21,12 +21,14 @@ use App\Models\PatientRecord\Appearance;
 use App\Models\PatientRecord\ScanResult;
 use App\Models\PatientRecord\TestResult;
 use App\Http\Requests\PatientUpdateRequest;
+use App\Http\Requests\Record\DailyRequest;
 use App\Http\Requests\Record\GeneralRequest;
 use App\Http\Requests\Record\UploadScanResult;
 use App\Http\Requests\Record\UploadTestResult;
 use App\Http\Requests\Record\DoctorGeneralUpdaterequest;
 use App\Http\Requests\Record\UploadDrugAvailable;
 use App\Models\PatientRecord\DrugAvailable;
+use App\Models\PatientRecord\Treatment;
 
 class PatientManagementController extends Controller
 {
@@ -388,67 +390,74 @@ class PatientManagementController extends Controller
     {
         // Update
         if (!empty($request->comment)) {
-        $comment = explode("|", $request->comment);
-        foreach ($comment as $comment) {
-            Comment::where('appearance_id', $request->appearance_id)->update([
-                'comment' => $comment,
-            ]);
-        }
-        }
+            $comment_data = Comment::where('appearance_id', $request->appearance_id)->get();
+            $comment = explode("|", $request->comment);
+            foreach ($comment as $key => $comment) {
+                Comment::where('id', $comment_data[$key]->id)->update([
+                    'comment' => $comment,
+                ]);
+            }
+            }
+    
+            if (!empty($request->diagnosis)) {
+            $diagnosis_data = Diagnosis::where('appearance_id', $request->appearance_id)->get();
+            $diagnosis = explode("|", $request->diagnosis);
+            foreach ($diagnosis as $key => $diagnosis) {
+                Diagnosis::where('id', $diagnosis_data[$key]->id)->update([
+                    'diagnosis' => $diagnosis,
+                ]);
+            }
+            }
 
-        if (!empty($request->diagnosis)) {
-        $diagnosis = explode("|", $request->diagnosis);
-        foreach ($diagnosis as $diagnosis) {
-            Diagnosis::where('appearance_id', $request->appearance_id)->update([
-                'diagnosis' => $diagnosis,
-            ]);
-        }
-        }
-
-        if (!empty($request->test)) {
-        $test = explode(",", $request->test);
-        foreach ($test as $test) {
-            Test::where('appearance_id', $request->appearance_id)->update([
-                'test' => $test,
-            ]);
-        }
-        }
-
-        if (!empty($request->scan)) {
-        $scan = explode(",", $request->scan);
-        foreach ($scan as $scan) {
-            Scan::where('appearance_id', $request->appearance_id)->update([
-                'scan' => $scan,
-            ]);
-        }
-        }
-
-        if (!empty($request->drip)) {
-        $drip = explode(",", $request->drip);
-        foreach ($drip as $drip) {
-            Drip::where('appearance_id', $request->appearance_id)->update([
-                'drip' => $drip,
-            ]);
-        }
-        }
-
-        if (!empty($request->drug)) {
-        $drug = explode(",", $request->drug);
-        foreach ($drug as $drug) {
-            Drug::where('appearance_id', $request->appearance_id)->update([
-                'drug' => $drug,
-            ]);
-        }
-        }
-
-        if (!empty($request->injection)) {
-        $injection = explode(",", $request->injection);
-        foreach ($injection as $injection) {
-            Injection::where('appearance_id', $request->appearance_id)->update([
-                'injection' => $injection,
-            ]);
-        }
-        }
+            if (!empty($request->test)) {
+            $test_data = Test::where('appearance_id', $request->appearance_id)->get();
+            $test = explode(",", $request->test);
+            foreach ($test as $key => $test) {
+                Test::where('id', $test_data[$key]->id)->update([
+                    'test' => $test,
+                ]);
+            }
+            }
+        
+            if (!empty($request->scan)) {
+            $scan_data = Scan::where('appearance_id', $request->appearance_id)->get();
+            $scan = explode(",", $request->scan);
+            foreach ($scan as $key => $scan) {
+                Scan::where('appearance_id', $scan_data[$key]->id)->update([
+                    'scan' => $scan,
+                ]);
+            }
+            }
+    
+            if (!empty($request->drip)) {
+            $drip_data = Drip::where('appearance_id', $request->appearance_id)->get();
+            $drip = explode(",", $request->drip);
+            foreach ($drip as $key => $drip) {
+                Drip::where('id', $drip_data[$key]->id)->update([
+                    'drip' => $drip,
+                ]);
+            }
+            }
+    
+            if (!empty($request->drug)) {
+            $drug_data = Drug::where('appearance_id', $request->appearance_id)->get();
+            $drug = explode(",", $request->drug);
+            foreach ($drug as $key => $drug) {
+                Drug::where('id', $drug_data[$key]->id)->update([
+                    'drug' => $drug,
+                ]);
+            }
+            }
+    
+            if (!empty($request->injection)) {
+            $injection_data = Injection::where('appearance_id', $request->appearance_id)->get();
+            $injection = explode(",", $request->injection);
+            foreach ($injection as $key => $injection) {
+                Injection::where('id', $injection_data[$key]->id)->update([
+                    'injection' => $injection,
+                ]);
+            }
+            }
 
         //Add New
         $id = Auth::user()->id;
@@ -611,70 +620,290 @@ class PatientManagementController extends Controller
         return view('manage-patient.check-record')->with('success', 'Scan Result uploaded successfuly');
     }
 
-    // public function uploadDrugNurse()
-    // {
-    //     return view('manage-patient.nurse.upload-drug');
-    // }
-
-    // public function saveUploadScanNurse(UploadDrugAvailable $request, $appearance_id)
-    // {
-    //     dd($request);
-    //     //Add New
-    //     $id = Auth::user()->id;
-    //     $personnel = DB::table('nurse')->where('user_id', $id)->first();
-    //     $patient_appearance = Appearance::where('id', $appearance_id)->first();
-    //     if($request->hasfile('drug'))
-    //     {
-    //         foreach($request->file('drug') as $file)
-    //         {
-    //             $drugName = $file->getClientOriginalName();
-    //             $file->move(public_path('drug-available'), $drugName); 
-    //         DrugAvailable::create([
-    //             'appearance_id' => $patient_appearance->id,
-    //             'appearance_title' => $patient_appearance->title,
-    //             'drug_available' => $drugName,
-    //             'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
-    //             'personnel_id' => $personnel->personnel_id
-    //         ]);
-    //         }
-    //     }
-    //     return view('manage-patient.nurse.upload-drug')->with('success', 'Drug uploaded successfuly');
-    // }
-    // Edit Patient General Record by Nurse
-    public function updateGeneralNurse()
-    {
-        $patient_data = DB::table('patients')->where('patient_key', 'PATMA001')->first();
-        return view('manage-patient.nurse.edit-record', compact('patient_data'));
-    }
-
-    // Edit Patient General Record by Nurse
-    public function saveupdateGeneralNurse()
-    {
-        return view('manage-patient.nurse.edit-record', compact('patient_data')); //stopped here
-    }
-
     // Add Patient Daily Record by Nurse
-    public function addRecordNurse()
+    public function addRecordNurse($record_id)
     {
-        return view('manage-patient.doctor.add-record');
+        return view('manage-patient.nurse.add-record', compact('record_id'));
     }
 
     // Save Patient Daily Record by Nurse
-    public function saveRecordNurse()
+    public function saveRecordNurse(DailyRequest $request)
     {
-        return view('manage-patient.check-record', compact('patient_data'));
+        $id = Auth::user()->id;
+        $personnel = DB::table('nurses')->where('user_id', $id)->first();
+
+        $date = date("l, jS F, Y");
+        $title = "Day- ".$date;
+        $patient_record = Record::where('id', $request->record_id)->first();
+
+        Appearance::create([
+            'record_id' => $patient_record->id,
+            'record_title' => $patient_record->title,
+            'title' => $title,
+            'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+            'personnel_id' => $personnel->personnel_id
+        ]);
+
+        $patient_appearance = Appearance::where('record_id', $patient_record->id)->where('title', $title)->first();
+        if (!empty($request->comment)) {
+        $comment = explode("|", $request->comment);
+        foreach ($comment as $comment) {
+            Comment::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'comment' => $comment,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+        }
+        }
+
+        if (!empty($request->treatment)) {
+        $treatment = explode("|", $request->treatment);
+        foreach ($treatment as $treatment) {
+            Treatment::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'treatment' => $treatment,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+        }
+        }
+
+        if (!empty($request->drip)) {
+        $drip = explode(",", $request->drip);
+        foreach ($drip as $drip) {
+            Drip::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'drip' => $drip,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+        }
+        }
+
+        if (!empty($request->drug)) {
+        $drug = explode(",", $request->drug);
+        foreach ($drug as $drug) {
+            Drug::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'drug' => $drug,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+        }
+        }
+
+        if (!empty($request->injection)) {
+        $injection = explode(",", $request->injection);
+        foreach ($injection as $injection) {
+            Injection::create([
+                'appearance_id' => $patient_appearance->id,
+                'appearance_title' => $patient_appearance->title,
+                'injection' => $injection,
+                'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                'personnel_id' => $personnel->personnel_id
+            ]);
+        }
+        }
+
+        return view('manage-patient.check-record')->with('success', 'Patient record has been saved successfuly');
     }
 
     // Edit Patient Daily Record by Nurse
-    public function updateRecordNurse()
+    public function updateRecordNurse($appearance_id)
     {
-        return view('manage-patient.doctor.add-record');
+        $patient_record = $comment_array = $treatment_array = $test_array = $scan_array = $drip_array = $drug_array = $injection_array = [];
+
+        $comment = Comment::where('appearance_id', $appearance_id)->get();
+        if ($comment->count() > 0) {
+        foreach ($comment as $comment) {
+            array_push($comment_array, $comment->comment);
+        };
+            $comment = implode("|", $comment_array);
+        }else {
+            $comment = "";
+        } 
+
+        $treatment = Treatment::where('appearance_id', $appearance_id)->get();
+        if ($treatment->count() > 0) {
+        foreach ($treatment as $treatment) {
+            array_push($treatment_array, $treatment->treatment);
+        };
+            $treatment = implode("|", $treatment_array);
+        }else {
+            $treatment = "";
+        }
+
+        $drip = Drip::where('appearance_id', $appearance_id)->get();
+        if ($drip->count() > 0) {
+        foreach ($drip as $drip) {
+            array_push($drip_array, $drip->drip);
+        };
+        $drip = implode(",", $drip_array);
+        }else {
+            $drip = "";
+        }
+
+        $drug = Drug::where('appearance_id', $appearance_id)->get();
+        if ($drug->count() > 0) {
+        foreach ($drug as $drug) {
+            array_push($drug_array, $drug->drug);
+        };
+        $drug = implode(",", $drug_array);
+        }else {
+            $drug = "";
+        }
+
+        $injection = Injection::where('appearance_id', $appearance_id)->get();
+        if ($injection->count() > 0) {
+        foreach ($injection as $injection) {
+            array_push($injection_array, $injection->injection);
+        };
+        $injection = implode(",", $injection_array);
+        }else {
+            $injection = "";
+        }
+
+        $patient_record['comment'] = $comment;
+        $patient_record['treatment'] = $treatment;
+        $patient_record['drip'] = $drip;
+        $patient_record['drug'] = $drug;
+        $patient_record['injection'] = $injection;
+        $patient_record['appearance_id'] = $appearance_id;
+
+        return view('manage-patient.nurse.edit-record', compact('patient_record'));
     }
 
     // Edit Patient Daily Record by Nurse
-    public function saveUpdateRecordNurse()
+    public function saveUpdateRecordNurse(DailyRequest $request)
     {
-        return view('manage-patient.check-record', compact('patient_data'));
+        // Update
+        if (!empty($request->comment)) {
+            $comment_data = Comment::where('appearance_id', $request->appearance_id)->get();
+            $comment = explode("|", $request->comment);
+            foreach ($comment as $key => $comment) {
+                Comment::where('id', $comment_data[$key]->id)->update([
+                    'comment' => $comment,
+                ]);
+            }
+            }
+    
+            if (!empty($request->treatment)) {
+            $treatment_data = Treatment::where('appearance_id', $request->appearance_id)->get();
+            $treatment = explode("|", $request->treatment);
+            foreach ($treatment as $key => $treatment) {
+                Treatment::where('id', $treatment_data[$key]->id)->update([
+                    'treatment' => $treatment,
+                ]);
+            }
+            }
+    
+            if (!empty($request->drip)) {
+            $drip_data = Drip::where('appearance_id', $request->appearance_id)->get();
+            $drip = explode(",", $request->drip);
+            foreach ($drip as $key => $drip) {
+                Drip::where('id', $drip_data[$key]->id)->update([
+                    'drip' => $drip,
+                ]);
+            }
+            }
+    
+            if (!empty($request->drug)) {
+            $drug_data = Drug::where('appearance_id', $request->appearance_id)->get();
+            $drug = explode(",", $request->drug);
+            foreach ($drug as $key => $drug) {
+                Drug::where('id', $drug_data[$key]->id)->update([
+                    'drug' => $drug,
+                ]);
+            }
+            }
+    
+            if (!empty($request->injection)) {
+            $injection_data = Injection::where('appearance_id', $request->appearance_id)->get();
+            $injection = explode(",", $request->injection);
+            foreach ($injection as $key => $injection) {
+                Injection::where('id', $injection_data[$key]->id)->update([
+                    'injection' => $injection,
+                ]);
+            }
+            }
+    
+            //Add New
+            $id = Auth::user()->id;
+            $personnel = DB::table('nurses')->where('user_id', $id)->first();
+        
+            $patient_appearance = Appearance::where('id', $request->appearance_id)->first();
+            if (!empty($request->new_comment)) {
+            $comment = explode("|", $request->new_comment);
+            foreach ($comment as $comment) {
+                Comment::create([
+                    'appearance_id' => $patient_appearance->id,
+                    'appearance_title' => $patient_appearance->title,
+                    'comment' => $comment,
+                    'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                    'personnel_id' => $personnel->personnel_id
+                ]);
+            }
+            }
+    
+            if (!empty($request->new_treatment)) {
+            $treatment = explode("|", $request->new_treatment);
+            foreach ($treatment as $treatment) {
+                Treatment::create([
+                    'appearance_id' => $patient_appearance->id,
+                    'appearance_title' => $patient_appearance->title,
+                    'treatment' => $treatment,
+                    'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                    'personnel_id' => $personnel->personnel_id
+                ]);
+            }
+            }
+    
+            if (!empty($request->new_drip)) {
+            $drip = explode(",", $request->new_drip);
+            foreach ($drip as $drip) {
+                Drip::create([
+                    'appearance_id' => $patient_appearance->id,
+                    'appearance_title' => $patient_appearance->title,
+                    'drip' => $drip,
+                    'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                    'personnel_id' => $personnel->personnel_id
+                ]);
+            }
+            }
+    
+            if (!empty($request->new_drug)) {
+            $drug = explode(",", $request->new_drug);
+            foreach ($drug as $drug) {
+                Drug::create([
+                    'appearance_id' => $patient_appearance->id,
+                    'appearance_title' => $patient_appearance->title,
+                    'drug' => $drug,
+                    'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                    'personnel_id' => $personnel->personnel_id
+                ]);
+            }
+            }
+    
+            if (!empty($request->new_injection)) {
+            $injection = explode(",", $request->injection);
+            foreach ($injection as $injection) {
+                Injection::create([
+                    'appearance_id' => $patient_appearance->id,
+                    'appearance_title' => $patient_appearance->title,
+                    'injection' => $injection,
+                    'personnel_name' => $personnel->title." ".$personnel->first_name." ".$personnel->last_name,
+                    'personnel_id' => $personnel->personnel_id
+                ]);
+            }
+            }
+            $patient_data = $patient_appearance->record->patient->first();
+    
+            return view('manage-patient.check-record');
     }
 
 }

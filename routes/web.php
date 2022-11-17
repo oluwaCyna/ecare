@@ -117,22 +117,27 @@ Route::post('/portal/upload-test', [App\Http\Controllers\PatientManagementContro
 Route::get('/portal/upload-scan/{appearance_id}', [App\Http\Controllers\PatientManagementController::class, 'uploadScanNurse'])->name('upload.scan.nurse');
 Route::post('/portal/upload-scan', [App\Http\Controllers\PatientManagementController::class, 'saveUploadScanNurse'])->name('upload.scan.nurse.store');
 
-Route::get('/portal/upload-drug', [App\Http\Controllers\PatientManagementController::class, 'uploadScanNurse'])->name('upload.scan.nurse');
-Route::get('/portal/upload-drug', [App\Http\Controllers\PatientManagementController::class, 'uploadDrugNurse'])->name('upload.drug.nurse');
-
-Route::get('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'updateGeneralNurse'])->name('general.nurse.update');
-Route::post('/portal/update-general', [App\Http\Controllers\PatientManagementController::class, 'saveupdateGeneralNurse'])->name('general.nurse.update.store');
-
-Route::get('/portal/daily', [App\Http\Controllers\PatientManagementController::class, 'addRecordNurse'])->name('daily.record.create');
+Route::get('/portal/daily/{record_id}', [App\Http\Controllers\PatientManagementController::class, 'addRecordNurse'])->name('daily.record.create');
 Route::post('/portal/daily', [App\Http\Controllers\PatientManagementController::class, 'saveRecordNurse'])->name('daily.record.store');
 
-Route::get('/portal/update-daily', [App\Http\Controllers\PatientManagementController::class, 'updateRecordNurse'])->name('daily.record.update');
-Route::put('/portal/update-daily', [App\Http\Controllers\PatientManagementController::class, 'saveUpdateRecordNurse'])->name('daily.record.update.store');
+Route::get('/portal/update-daily/{appearance_id}', [App\Http\Controllers\PatientManagementController::class, 'updateRecordNurse'])->name('daily.record.update');
+Route::post('/portal/update-daily', [App\Http\Controllers\PatientManagementController::class, 'saveUpdateRecordNurse'])->name('daily.record.update.store');
 
 // Route::post('/portal/add-record', [App\Http\Controllers\PatientManagementController::class, 'saveAddRecord'])->name('patient.record.store');
 
 //Delete Patient Record data
 Route::delete('/patient-data/delete', [App\Http\Controllers\RecordDataController::class, 'deletePatientData'])->name('data.delete');
+
+// Message
+Route::get('/message/{user_id}', [App\Http\Controllers\MessageController::class, 'sendMessage'])->name('message');
+Route::post('/message', [App\Http\Controllers\MessageController::class, 'saveMessage'])->name('message.store');
+
+//Notifications
+Route::get('/notification', [App\Http\Controllers\MessageController::class, 'sendNotification'])->name('notification');
+Route::get('/notification-listen', [App\Http\Controllers\MessageController::class, 'listenNotification'])->name('notification.listen');
+
+
+Route::get('/personnel-list', [App\Http\Controllers\user\UserListController::class, 'userList'])->name('user.list');
 
 
 

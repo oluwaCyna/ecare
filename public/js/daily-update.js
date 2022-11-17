@@ -1,39 +1,29 @@
 let comment = document.getElementById('new-comment');
-let diagnosis = document.getElementById('new-diagnosis');
-let test = document.getElementById('new-test');
-let scan = document.getElementById('new-scan');
+let treatment = document.getElementById('new-treatment');
 let drip = document.getElementById('new-drip');
 let drug = document.getElementById('new-drug');
 let injection = document.getElementById('new-injection');
 
 let addComment = document.getElementById('add-new-comment');
-let addDiagnosis = document.getElementById('add-new-diagnosis');
-let addTest = document.getElementById('add-new-test');
-let addScan = document.getElementById('add-new-scan');
+let addTreatment = document.getElementById('add-new-treatment');
 let addDrip = document.getElementById('add-new-drip');
 let addDrug = document.getElementById('add-new-drug');
 let addInjection = document.getElementById('add-new-injection');
 
 let hideComment = document.getElementById('hide-new-comment');
-let hideDiagnosis = document.getElementById('hide-new-diagnosis');
-let hideTest = document.getElementById('hide-new-test');
-let hideScan = document.getElementById('hide-new-scan');
+let hideTreatment = document.getElementById('hide-new-treatment');
 let hideDrip = document.getElementById('hide-new-drip');
 let hideDrug = document.getElementById('hide-new-drug');
 let hideInjection = document.getElementById('hide-new-injection');
 
 comment.style.display = 'none';
-diagnosis.style.display = 'none';
-test.style.display = 'none';
-scan.style.display = 'none';
+treatment.style.display = 'none';
 drip.style.display = 'none';
 drug.style.display = 'none';
 injection.style.display = 'none';
 
 hideComment.style.display = 'none';
-hideDiagnosis.style.display = 'none';
-hideTest.style.display = 'none';
-hideScan.style.display = 'none';
+hideTreatment.style.display = 'none';
 hideDrip.style.display = 'none';
 hideDrug.style.display = 'none';
 hideInjection.style.display = 'none';
@@ -55,51 +45,19 @@ hideComment.addEventListener('click', function(e) {
    
 });
 
-addDiagnosis.addEventListener('click', function(e) {
+addTreatment.addEventListener('click', function(e) {
     e.preventDefault();
-    diagnosis.style.display = 'flex';
-    addDiagnosis.style.display = 'none';
-    hideDiagnosis.style.display = 'block';
+    treatment.style.display = 'flex';
+    addTreatment.style.display = 'none';
+    hideTreatment.style.display = 'block';
    
    });
    
-hideDiagnosis.addEventListener('click', function(e) {
+hideTreatment.addEventListener('click', function(e) {
     e.preventDefault();
-    diagnosis.style.display = 'none';
-    addDiagnosis.style.display = 'block';
-    hideDiagnosis.style.display = 'none';
-    
-});
-
-addTest.addEventListener('click', function(e) {
-    e.preventDefault();
-    test.style.display = 'flex';
-    addTest.style.display = 'none';
-    hideTest.style.display = 'block';
-   
-   });
-   
-   hideTest.addEventListener('click', function(e) {
-    e.preventDefault();
-    test.style.display = 'none';
-    addTest.style.display = 'block';
-    hideTest.style.display = 'none';
-    
-});
-
-addScan.addEventListener('click', function(e) {
-    e.preventDefault();
-    scan.style.display = 'flex';
-    addScan.style.display = 'none';
-    hideScan.style.display = 'block';
-   
-   });
-   
-   hideScan.addEventListener('click', function(e) {
-    e.preventDefault();
-    scan.style.display = 'none';
-    addScan.style.display = 'block';
-    hideScan.style.display = 'none';
+    treatment.style.display = 'none';
+    addTreatment.style.display = 'block';
+    hideTreatment.style.display = 'none';
     
 });
 

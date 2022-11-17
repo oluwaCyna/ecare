@@ -194,7 +194,9 @@
                                             <div class="card" style="margin:0;">
                                                 <div class="card-header">
                                                     <h3 class="card-title" style="font-weight:bold;">{{ $record->title ?? 'PlaceHolder001 - Monday, 22nd December, 2020. 12:33PM' }}</h3>
-                        
+                                                    @if(Auth::user()->role == 'nurse')
+                                                    <a href="/portal/daily/{{$record->id}}" class="btn btn-primary offset-1">New Daily</a>
+                                                    @endif
                                                     <div class="card-tools">
                                                         <button type="button" class="btn btn-tool" data-card-widget="maximize">
                                                             <i class="fas fa-expand"></i>
@@ -223,7 +225,6 @@
                                                             <div class="modal-body">
                                                                 <a href="/portal/upload-test/{{ $appearance->id }}" class="btn btn-primary">Add Test Result</a>
                                                                 <a href="/portal/upload-scan/{{ $appearance->id }}" class="btn btn-primary">Add Scan Result</a>
-                                                                <a href="{{route('upload.drug.nurse')}}" class="btn btn-primary">Add/Update Others</a>
                                                             </div>
                                                             <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -240,8 +241,22 @@
                                                                   {{ $appearance->title ?? 'PlaceHolder001' }}
                                                                 </a>
                                                             </h4>
-                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UploadModal{{ $appearance->id }}">Update</button>
-                                                            <a class="btn btn-primary" href="/portal/update/{{$appearance->id}}">Edit</a>
+                                                            @switch(Auth::user()->role)
+                                                                @case('doctor')
+                                                                    <a class="btn btn-primary" href="/portal/update/{{$appearance->id}}">Edit</a>
+                                                                    @break
+                                                            
+                                                                    @case('nurse')
+                                                                    @if($appearance->title == 'General')
+                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UploadModal{{ $appearance->id }}">Update</button>
+                                                                    @endif
+                                                                    @if($appearance->title != 'General')
+                                                                    <a href="/portal/update-daily/{{$appearance->id}}" class="btn btn-primary">Update</a>
+                                                                    @endif
+                                                                    @break
+                                                            
+                                                                @default
+                                                            @endswitch
                                                           {{-- <h3 class="card-title">
                                                             <i class="fas fa-text-width"></i>
                                                             General
@@ -520,8 +535,7 @@
                                                       <!-- /.card -->
 
                                                     <!-- Daily Treatment -->
-                                                   
-                                                    
+                                                                                                       
                                                       <!-- /.card -->
 
                                                     </div>

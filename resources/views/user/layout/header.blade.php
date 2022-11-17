@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>eCare</title>
 
 <!-- Google Font: Source Sans Pro -->
@@ -16,8 +17,9 @@
 <!-- My style -->
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+
 {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
-@vite(['resources/js/app.js'])
+@vite('resources/js/app.js')
 
 
 @yield('scss-script')
@@ -268,6 +270,12 @@
                 <a href="{{ Route('portal') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Patient</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ Route('user.list') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Message</p>
                 </a>
               </li>
             </ul>
