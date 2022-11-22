@@ -67,13 +67,31 @@ class MessageController extends Controller
 
     public function saveMessage(Request $request)
     {
+        if(!empty($request->message))
+        {
         Message::create([
             'sender_id' => $request->sender_id,
             'recipient_id' => $request->recipient_id,
-            'message' => $request->message
+            'message' => $request->message,
+            'type' => 'text'
         ]);
-        return redirect()->back()->with('success', 'sent');
+        }
+
+        if($request->hasfile('file'))
+        {
+                $file = $request->file;
+                $fileName = time().$file->getClientOriginalName();
+                $file->move(public_path('chat-attachment'), $fileName); 
+        Message::create([
+            'sender_id' => $request->sender_id,
+            'recipient_id' => $request->recipient_id,
+            'message' => $fileName,
+            'type' => 'file'
+        ]);
     }
+
+    return redirect()->back()->with('success', 'sent');
+}
 
     public function sendNotification()
     {

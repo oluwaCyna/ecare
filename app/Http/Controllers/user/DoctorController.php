@@ -30,37 +30,40 @@ class DoctorController extends Controller
     // Doctor Profile Update Save
     public function saveUpdateDoctor(DoctorRequest $request)
     {
-        $id = Auth::user()->id;
-        $imageName = "";
-        
-        if($request->image != null && $request->image->isValid())
-        {
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('profile-picture'), $imageName);
-        }
-        User::where('id', $id)->update([
-            'title' => $request->title,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-        ]);
+            $id = Auth::user()->id;
+            $user = DB::table('doctor')->where('user_id', $id)->first();
 
-        Doctor::where('user_id', $id)->update([
-            'title' => $request->title,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'gender'=> $request->gender,
-            'phone'=> $request->phone,
-            'email' => $request->email,
-            'address'=> $request->address,
-            'education'=> $request->education,
-            'specialization'=> $request->specialization,
-            'speciality'=> $request->speciality,
-            'language'=> $request->language,
-            'bio'=> $request->bio,
-            'image'=> $imageName,
-        ]);
-        return view('user.doctor.update');
+            if($request->image != null && $request->image->isValid())
+            {
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->move(public_path('profile-picture'), $imageName);
+            }else [
+                $imageName = $user->image
+            ];
+            User::where('id', $id)->update([
+                'title' => $request->title,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+            ]);
+
+            Doctor::where('user_id', $id)->update([
+                'title' => $request->title,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'gender'=> $request->gender,
+                'phone'=> $request->phone,
+                'email' => $request->email,
+                'address'=> $request->address,
+                'education'=> $request->education,
+                'specialization'=> $request->specialization,
+                'speciality'=> $request->speciality,
+                'language'=> $request->language,
+                'bio'=> $request->bio,
+                'image'=> $imageName,
+            ]);
+            $user = DB::table('doctor')->where('user_id', $id)->first();
+        return view('user.doctor.update', compact('user'))->with('success', 'Updated successfuly');
     }
 
     // Doctor View Patient Record

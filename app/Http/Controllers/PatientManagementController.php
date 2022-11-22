@@ -47,7 +47,7 @@ class PatientManagementController extends Controller
     // Load Patient Record
     public function loadCheckRecord(IdPatientRequest $request)
     {
-        session(['patient_key' => $request->patient_key]);
+        // session(['patient_key' => $request->patient_key]);
         // $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
         $patient_data = Patient::where('patient_key', $request->patient_key)->first();
         // dd($patient_data->record[0]->appearance[0]->comment);
@@ -98,9 +98,9 @@ class PatientManagementController extends Controller
             'patient_key'=> $patient_key
         ]);
         // session(['patient_key' => $patient_key]);
-        $patient_data = DB::table('patients')->where('patient_key', $patient_key)->first();
-        redirect()->back()->with('success', 'Patient sucessfully added');
-        return view('manage-patient.record', compact('patient_data'));
+        // $patient_data = DB::table('patients')->where('patient_key', $patient_key)->first();
+        $patient_data = Patient::where('patient_key', $patient_key)->first();
+        return view('manage-patient.record', compact('patient_data'))->with('success', 'Patient sucessfully added');
     }
 
     // Update Patient
@@ -131,12 +131,14 @@ class PatientManagementController extends Controller
     // Update Patient Save
     public function saveUpdatePatient(PatientUpdateRequest $request)
     {
-        $imageName = "";
+        $patient_data = DB::table('patients')->where('patient_key', $request->patient_key)->first();
         if($request->image != null && $request->image->isValid())
         {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('patient-picture'), $imageName);
-        }
+        }else [
+            $imageName = $patient_data->image
+        ];
 
         Patient::where('patient_key', $request->patient_key)->update([
             'first_name' => $request->first_name,
@@ -152,10 +154,18 @@ class PatientManagementController extends Controller
         return redirect()->back()->with('success', 'Patient data has been updated successfuly');
     }
 
-    // View Active Patient
-    public function activePatient()
+    // View Patients
+    public function patientList()
     {
-        return view('manage-patient.active-patient');
+        $patient = Patient::all();
+        return view('manage-patient.patient', compact('patient'));
+    }
+
+    // View Patients Record from List
+    public function patientRecord($patient_id)
+    {
+        $patient_data = Patient::where('id', $patient_id)->first();
+        return view('manage-patient.record', compact('patient_data'));
     }
 
      // Generate PDF

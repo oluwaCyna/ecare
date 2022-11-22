@@ -29,29 +29,7 @@
 <!-- receive notifications -->
 {{-- <script src="/resources/js/app.js"></script> --}}
 
-{{-- <script src="https://js.pusher.com/4.1/pusher.min.js"></script> --}}
-      
-    <script>
-//       Pusher.logToConsole = true;
-      
-//       window.Echo = new Echo({
-//         broadcaster: 'pusher',
-//         key: '9507b817f388f715e79d',
-//         // cluster: 'mt1',
-//         encrypted: true,
-//         logToConsole: true,
 
-//         app_id : "1508707",
-// // key : "9507b817f388f715e79d",
-// secret : "8a1e5e589e81b3e729c7",
-// cluster : "mt1"
-//       });
-      
-      Echo.channel('notification')
-      .listen('MessageNotification', (e) => {
-          alert('e.message.message');
-      });
-    </script>
 <!-- receive notifications -->
 @yield('script')
 

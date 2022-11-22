@@ -66,64 +66,6 @@
         </div>
       </li>
 
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('adminlte/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('adminlte/dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="{{ asset('adminlte/dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -198,12 +140,12 @@
     <div class="sidebar">
       <!-- Sidebar user (optional) -->
       <div class="d-flex flex-column">
-        <div class="user-panel mt-3 pb-3 d-flex">
-          <div class="image">
-            <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-          </div>
+        <div class="user-panel pb-3 d-flex">
+          {{-- <div class="image">
+            <img src="@if($user->image != null){{ asset('profile-picture/'.$user->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif" class="img-circle elevation-2" style="height: 35px;" alt="User Image">
+          </div> --}}
           <div class="info">
-            <a href="#" class="d-block"> Pierce</a>
+            <a href="#" class="d-block">{{ Auth::user()->title." ".Auth::user()->first_name }}</a>
           </div>
         </div>
         <div class="user-panel mt-3 d-flex">
@@ -255,9 +197,9 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{ Route('patient.active') }}" class="nav-link">
+                  <a href="{{ Route('patient.list') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Present Patient</p>
+                    <p>Patient List</p>
                   </a>
                 </li>
               </ul>
@@ -285,9 +227,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ Route('patient.active') }}" class="nav-link">
+                <a href="{{ Route('patient.list') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Present Patient</p>
+                  <p>Patient List</p>
                 </a>
               </li>
             </ul>

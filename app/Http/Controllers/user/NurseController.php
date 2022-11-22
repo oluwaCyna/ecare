@@ -32,13 +32,15 @@ class NurseController extends Controller
     public function saveUpdateNurse(NurseRequest $request)
     {
         $id = Auth::user()->id;
-        $imageName = "";
+        $user = DB::table('nurses')->where('user_id', $id)->first();
         
         if($request->image != null && $request->image->isValid())
         {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('profile-picture'), $imageName);
-        }
+        }else [
+            $imageName = $user->image
+        ];
         User::where('id', $id)->update([
             'title' => $request->title,
             'first_name' => $request->first_name,
@@ -61,7 +63,8 @@ class NurseController extends Controller
             'bio'=> $request->bio,
             'image'=> $imageName,
         ]);
-        return view('user.nurse.update');
+        $user = DB::table('nurses')->where('user_id', $id)->first();
+        return view('user.nurse.update', compact('user'))->with('success', 'Updated successfuly');
     }
 
     

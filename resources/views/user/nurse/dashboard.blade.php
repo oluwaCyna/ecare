@@ -45,18 +45,6 @@
                 
                 <p class="text-muted text-center">{{ $user->specialization }}</p>
 
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Patients Treated</b> <a class="float-right">1,322</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Patients on Treatment</b> <a class="float-right">543</a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Days since starting</b> <a class="float-right">13,287</a>
-                  </li>
-                </ul>
-
                 <a href="#" class="btn btn-primary btn-block"><b>Active</b></a>
               </div>
               <!-- /.card-body -->
@@ -89,13 +77,6 @@
 
                 <strong><i class="fa-solid fa-snowflake mr-1"></i></i> Speciality</strong>
 
-                {{-- <p class="text-muted">
-                  <span class="tag tag-danger">Allergy and Immunology</span>
-                  <span class="tag tag-success">Anesthesiology</span>
-                  <span class="tag tag-info">Dermatology</span>
-                  <span class="tag tag-warning">Diagnostic radiology</span>
-                  <span class="tag tag-primary">Emergency medicine</span>
-                </p> --}}
                 <p class="text-muted">{{ $user->speciality }}</p>
 
                 <hr>
@@ -119,8 +100,8 @@
                 <hr>
 
                 <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
-
-                {{-- <p class="text-muted">{{ $user->address }}</p> --}}
+                
+                <p class="text-muted">{{ $user->address }}</p>
 
                 <hr>
 

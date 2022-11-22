@@ -11,6 +11,7 @@ class Message extends Model
         'sender_id',
         'recipient_id',
         'message',
+        'type'
     ];
 
 }

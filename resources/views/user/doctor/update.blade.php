@@ -33,6 +33,29 @@
                         <div class="card-header">{{ __('Update Profile') }}</div>
         
                         <div class="card-body">
+
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <strong>{{ session('error') }}</strong>
+                                </div>
+                            @endif
+
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <strong>{{ session('success') }}</strong>
+                                </div>
+                            @endif
+
+                            <script>
+                                $(".alert").alert();
+                            </script>
+
                             <form method="POST" action="{{ route('doctor.update.save') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
@@ -83,7 +106,11 @@
                                     <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ $user->gender ?? old('gender') }}"  autocomplete="last_name" autofocus>
+                                        <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ $user->gender ?? old('gender') }}" >
+                                            <option selected disabled>select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                          </select>
         
                                         @error('gender')
                                             <span class="invalid-feedback" role="alert">

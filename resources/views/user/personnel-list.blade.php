@@ -212,9 +212,9 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Specialization</th>
-                                            <th>Phone Number</th>
                                             <th>Picture</th>
                                             <th>Status</th>
+                                            <th>Message</th>
                                         </tr>
                                     </tfoot>
                                 </table>

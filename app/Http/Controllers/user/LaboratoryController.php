@@ -32,13 +32,15 @@ class LaboratoryController extends Controller
     public function saveUpdateLaboratory(LaboratoryRequest $request)
     {
         $id = Auth::user()->id;
-        $imageName = "";
+        $user = DB::table('laboratories')->where('user_id', $id)->first();
         
         if($request->image != null && $request->image->isValid())
         {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('profile-picture'), $imageName);
-        }
+        }else [
+            $imageName = $user->image
+        ];
         User::where('id', $id)->update([
             'title' => $request->title,
             'first_name' => $request->first_name,
@@ -61,7 +63,8 @@ class LaboratoryController extends Controller
             'bio'=> $request->bio,
             'image'=> $imageName,
         ]);
-        return view('user.laboratory.update');
+        $user = DB::table('laboratories')->where('user_id', $id)->first();
+        return view('user.laboratory.update', compact('user'))->with('success', 'Updated successfuly');
     }
 
     // Laboratory View Laboratory's list

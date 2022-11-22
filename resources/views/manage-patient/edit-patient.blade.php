@@ -82,8 +82,12 @@
                                     <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="gender" type="text" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ $patient_data->gender ?? old('gender') }}"  autocomplete="last_name" autofocus>
-        
+                                        <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender" value="{{ $user->gender ?? old('gender') }}" >
+                                            <option selected disabled>select gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                          </select>
+
                                         @error('gender')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -158,7 +162,7 @@
                                     <label for="height" class="col-md-4 col-form-label text-md-end">{{ __('Height') }}</label>
         
                                     <div class="col-md-6">
-                                        <input id="height" type="number" class="form-control @error('height') is-invalid @enderror" name="height" value="{{ $patient_data->height ?? old('height') }}">
+                                        <input id="height" type="text" class="form-control @error('height') is-invalid @enderror" name="height" value="{{ $patient_data->height ?? old('height') }}">
         
                                         @error('height')
                                             <span class="invalid-feedback" role="alert">

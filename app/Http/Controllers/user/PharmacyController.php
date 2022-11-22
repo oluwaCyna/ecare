@@ -32,13 +32,15 @@ class PharmacyController extends Controller
     public function saveUpdatePharmacy(PharmacyRequest $request)
     {
         $id = Auth::user()->id;
-        $imageName = "";
+        $user = DB::table('pharmacies')->where('user_id', $id)->first();
         
         if($request->image != null && $request->image->isValid())
         {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('profile-picture'), $imageName);
-        }
+        }else [
+            $imageName = $user->image
+        ];
         User::where('id', $id)->update([
             'title' => $request->title,
             'first_name' => $request->first_name,
@@ -61,7 +63,8 @@ class PharmacyController extends Controller
             'bio'=> $request->bio,
             'image'=> $imageName,
         ]);
-        return view('user.pharmacy.update');
+        $user = DB::table('pharmacies')->where('user_id', $id)->first();
+        return view('user.pharmacy.update', compact('user'))->with('success', 'Updated successfuly');
     }
 
     // Pharmacy View Pharmacy's list
