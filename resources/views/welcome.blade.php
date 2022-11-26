@@ -439,6 +439,7 @@
             @endswitch
                 @else
                 <a href="{{ route('login') }}"  class="col btn btn-primary">Login</a>
+                <a href="{{ route('admin') }}"  class="col btn btn-primary">Admin</a>
                 @endauth
             @endif
         </div>

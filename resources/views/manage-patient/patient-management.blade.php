@@ -35,18 +35,15 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="adminlte/index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="/" class="nav-link">Home</a>
       </li>
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+       {{-- <li class="nav-item">
+       <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block">
@@ -102,13 +99,13 @@
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
-      </li>
+      </li>--}}
       <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             {{ Auth::user()->first_name }}
-        </a>
+        </a>  --}}
 
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">
@@ -118,7 +115,7 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
-        </div>
+        {{-- </div> --}}
     </li>
     </ul>
   </nav>
@@ -190,6 +187,12 @@
             @switch(Auth::user()->role)
             @case('doctor')
               <ul class="nav">
+                <li class="nav-item">
+                  <a href="{{ Route('general.record.create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>New Record</p>
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a href="{{ Route('patient.check') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>

@@ -68,5 +68,9 @@ class Kernel extends HttpKernel
         'nurse' => \App\Http\Middleware\NurseMiddleware::class,
         'laboratory' => \App\Http\Middleware\LaboratoryMiddleware::class,
         'pharmacy' => \App\Http\Middleware\PharmacyMiddleware::class,
+        'doctornurse' => \App\Http\Middleware\DoctorNurseMiddleware::class,
+        'dashboard' => \App\Http\Middleware\AdminMiddleware::class,
+        'personnel' => \App\Http\Middleware\AdminMiddleware::class,
+        'admin-update' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }

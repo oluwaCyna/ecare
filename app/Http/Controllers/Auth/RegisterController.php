@@ -150,20 +150,21 @@ class RegisterController extends Controller
 
         switch ($data['role']) {
 
-            case 'admin':
-                $role_user = Admin::create([
-                    'user_id' => $user_id,
-                    'title' => $data['title'],
-                    'first_name' => $data['first_name'],
-                    'last_name' => $data['last_name'],
-                    'email' => $data['email'],
-                    'raw_password' => $user_pass,
-                    'password' => Hash::make($user_pass),
-                    ]);
-                    if (config('custom_values.app_mode') == 'online') {
-                    Mail::to($data['email'])->send(new AdminRegister($role_user));
-                    }
-                break;
+            // case 'admin':
+            //     $role_user = Admin::create([
+            //         'user_id' => $user_id,
+            //         'personnel_id' => personnelID('admins', "ADMIN", $data),
+            //         'title' => $data['title'],
+            //         'first_name' => $data['first_name'],
+            //         'last_name' => $data['last_name'],
+            //         'email' => $data['email'],
+            //         'raw_password' => $user_pass,
+            //         'password' => Hash::make($user_pass),
+            //         ]);
+            //         if (config('custom_values.app_mode') == 'online') {
+            //         Mail::to($data['email'])->send(new AdminRegister($role_user));
+            //         }
+            //     break;
 
             case 'doctor':
                 $role_user = Doctor::create([

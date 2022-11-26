@@ -157,8 +157,8 @@ class PatientManagementController extends Controller
     // View Patients
     public function patientList()
     {
-        $patient = Patient::all();
-        return view('manage-patient.patient', compact('patient'));
+        $patients = Patient::paginate(10);
+        return view('manage-patient.patient', compact('patients'));
     }
 
     // View Patients Record from List
@@ -555,7 +555,7 @@ class PatientManagementController extends Controller
         }
 
         if (!empty($request->new_injection)) {
-        $injection = explode(",", $request->injection);
+        $injection = explode(",", $request->new_injection);
         foreach ($injection as $injection) {
             Injection::create([
                 'appearance_id' => $patient_appearance->id,

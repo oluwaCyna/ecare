@@ -16,7 +16,6 @@ class MessageController extends Controller
 {
     public function sendMessage($user_id)
     {
-        // dd(User::where('id', $user_id)->first());
         $sender_id = Auth::user()->id;
         $recipient_id = $user_id;
         $sender_role = Auth::user()->role;
@@ -25,9 +24,11 @@ class MessageController extends Controller
         switch ($sender_role) {
             case 'doctor':
                 $sender = Doctor::where('user_id', $sender_id)->first();
+                $user = Doctor::where('user_id', $sender_id)->first();
                 break;
             case 'nurse':
                 $sender = Nurse::where('user_id', $sender_id)->first();
+                $user = Nurse::where('user_id', $sender_id)->first();
                 break;
             case 'laboratory':
                 $sender = Laboratory::where('user_id', $sender_id)->first();
@@ -62,7 +63,7 @@ class MessageController extends Controller
         $recipient_messages = Message::where('sender_id', $recipient_id)->where('recipient_id', $sender_id)->get();
         $message = $sender_messages->merge($recipient_messages);
         $message = $message->sortBy('id');
-        return view('message', compact(['message', 'sender', 'recipient']));
+        return view('message', compact(['user', 'message', 'sender', 'recipient']));
     }
 
     public function saveMessage(Request $request)

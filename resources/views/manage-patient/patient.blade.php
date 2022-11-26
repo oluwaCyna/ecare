@@ -47,17 +47,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($patient as $patient)
+                                    @foreach ($patients as $patient)
                                     <tr>
                                         <td>{{$patient->title." ".$patient->first_name." ".$patient->last_name}}</td>
                                         <td>{{$patient->patient_key}}</td>
                                         <td>
                                             <img class="  img-circle" height="50" width="50"
-                                                src="@if($patient->image != null){{ asset('profile-picture/'.$patient->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif"
+                                                src="@if($patient->image != null){{ asset('patient-picture/'.$patient->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif"
                                                 alt="patient profile picture">
                                         </td>
                                         <td>Online</td>
-                                        <td><a href="/portal/{{$patient->id}}" class="btn btn-primary">View</a></td>
+                                        <td><a href="/portal/patient/{{$patient->id}}" class="btn btn-primary">View</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -71,6 +71,10 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div class="d-flex justify-content-center mt-3">
+                                {!! $patients->links() !!}
+                            </div>
+
                            
                         </div>
                     </div>

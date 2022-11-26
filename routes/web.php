@@ -29,8 +29,6 @@ Auth::routes();
 Route::get('/credential', [App\Http\Controllers\DisplayController::class, 'display'])->name('credential');
 Route::get('/credential/pdf', [App\Http\Controllers\DisplayController::class, 'createPDF']);
 
-//Admin
-Route::get('/add-personnel', [App\Http\Controllers\user\AdminController::class, 'add'])->name('admin.add');
 
 // Doctor
 Route::group(['middleware' => ['doctor']], function () {
@@ -120,7 +118,7 @@ Route::get('/patient', [App\Http\Controllers\user\PatientController::class, 'das
 
 Route::get('/patient/records', [App\Http\Controllers\user\PatientController::class, 'recordsPatient'])->name('patient.records');
 
-// Route::group(['middleware' => ['doctor', 'nurse']], function () {
+Route::group(['middleware' => ['doctornurse']], function () {
 // Patient Management
 Route::get('/patient-portal', [App\Http\Controllers\PatientManagementController::class, 'portal'])->name('portal');
 
@@ -128,13 +126,13 @@ Route::get('/portal/update/{appearance_id}', [App\Http\Controllers\PatientManage
 Route::post('/portal/update', [App\Http\Controllers\PatientManagementController::class, 'saveUpdateRecordDoctor'])->name('general.record.update.store');
 
 Route::get('/portal/patient', [App\Http\Controllers\PatientManagementController::class, 'patientList'])->name('patient.list');
-Route::get('/portal/{patient_id}', [App\Http\Controllers\PatientManagementController::class, 'patientRecord'])->name('patient.list.record');
+Route::get('/portal/patient/{patient_id}', [App\Http\Controllers\PatientManagementController::class, 'patientRecord'])->name('patient.list.record');
 
 Route::get('/portal/check-record', [App\Http\Controllers\PatientManagementController::class, 'checkRecord'])->name('patient.check');
 Route::post('/portal/check-record', [App\Http\Controllers\PatientManagementController::class, 'loadCheckRecord'])->name('patient.check.load');
 
 Route::get('/portal/check-record/pdf', [App\Http\Controllers\PatientManagementController::class, 'createPDF']); 
-// });
+});
 
 Route::group(['middleware' => ['auth']], function () {
 //Delete Patient Record data
@@ -150,11 +148,29 @@ Route::get('/notification-listen', [App\Http\Controllers\MessageController::clas
 
 Route::get('/personnel-list', [App\Http\Controllers\user\UserListController::class, 'userList'])->name('user.list');
 
-//Onlin Status
+// Onlin Status
 Route::put('/status', [App\Http\Controllers\UserListController::class, 'status'])->name('status');
 });
 
+// Admin
+Route::group(['middleware' => ['dashboard']], function () {
+Route::get('/administrator', [App\Http\Controllers\user\AdminController::class, 'dashboard'])->name('admin');
+});
+Route::get('/password', [App\Http\Controllers\user\AdminController::class, 'password'])->name('password');
+Route::post('/password', [App\Http\Controllers\user\AdminController::class, 'checkPassword'])->name('password.check');
 
 
+Route::group(['middleware' => ['personnel']], function () {
+Route::get('/add-personnel', [App\Http\Controllers\user\AdminController::class, 'add'])->name('admin.add');
+});
+Route::get('/personnel', [App\Http\Controllers\user\AdminController::class, 'personnel'])->name('personnel');
+Route::post('/personnel', [App\Http\Controllers\user\AdminController::class, 'checkPersonnel'])->name('personnel.check');
 
+Route::group(['middleware' => ['admin-update']], function () {
+Route::get('/admin-update', [App\Http\Controllers\user\AdminController::class, 'editAdmin'])->name('admin.edit');
+Route::put('/admin-update', [App\Http\Controllers\user\AdminController::class, 'saveEditAdmin'])->name('admin.store');
+});
+Route::get('/admin-pass', [App\Http\Controllers\user\AdminController::class, 'updateAdmin'])->name('update.admin');
+Route::post('/admin-pass', [App\Http\Controllers\user\AdminController::class, 'checkAdmin'])->name('admin.check');
 
+Route::get('/logout', [App\Http\Controllers\user\AdminController::class, 'logout'])->name('admin.logout');
