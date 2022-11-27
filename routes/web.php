@@ -148,8 +148,6 @@ Route::get('/notification-listen', [App\Http\Controllers\MessageController::clas
 
 Route::get('/personnel-list', [App\Http\Controllers\user\UserListController::class, 'userList'])->name('user.list');
 
-// Onlin Status
-Route::put('/status', [App\Http\Controllers\UserListController::class, 'status'])->name('status');
 });
 
 // Admin
@@ -174,3 +172,6 @@ Route::get('/admin-pass', [App\Http\Controllers\user\AdminController::class, 'up
 Route::post('/admin-pass', [App\Http\Controllers\user\AdminController::class, 'checkAdmin'])->name('admin.check');
 
 Route::get('/logout', [App\Http\Controllers\user\AdminController::class, 'logout'])->name('admin.logout');
+
+// Online Status
+Route::put('/status', [App\Http\Controllers\user\UserListController::class, 'statusUpdate'])->name('status.update');

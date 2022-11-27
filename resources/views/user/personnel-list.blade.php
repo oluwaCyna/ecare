@@ -74,7 +74,7 @@
                                                     src="@if($user->image != null){{ asset('profile-picture/'.$user->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif"
                                                     alt="User profile picture">
                                             </td>
-                                            <td>Online</td>
+                                            <td><div class="d-flex justify-content-start align-items-center"><span @if ($user->user->status == 'online') style="background-color:#0fcc45" @else style="background-color:#e61a0b" @endif class="blink mr-2"></span> {{ $user->user->status }}</div></td>
                                             <td><a href="/message/{{$user->user_id}}" class="btn btn-primary">Message</a></td>
                                         </tr>
                                         @endforeach
@@ -117,7 +117,7 @@
                                                     src="@if($user->image != null){{ asset('profile-picture/'.$user->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif"
                                                     alt="User profile picture">
                                             </td>
-                                            <td>Online</td>
+                                            <td><div class="d-flex justify-content-start align-items-center"><span @if ($user->user->status == 'online') style="background-color:#0fcc45" @else style="background-color:#e61a0b" @endif class="blink mr-2"></span> {{ $user->user->status }}</div></td>
                                             <td><a href="/message/{{$user->user_id}}" class="btn btn-primary">Message</a></td>
                                         </tr>
                                         @endforeach
@@ -160,7 +160,7 @@
                                                     src="@if($user->image != null){{ asset('profile-picture/'.$user->image) }} @else {{ asset('adminlte/dist/img/avatar5.png') }}@endif"
                                                     alt="User profile picture">
                                             </td>
-                                            <td>Online</td>
+                                            <td><div class="d-flex justify-content-start align-items-center"><span @if ($user->user->status == 'online') style="background-color:#0fcc45" @else style="background-color:#e61a0b" @endif class="blink mr-2"></span> {{ $user->user->status }}</div></td>
                                             <td><a href="/message/{{$user->user_id}}" class="btn btn-primary">Message</a></td>
                                         </tr>
                                         @endforeach
@@ -189,7 +189,7 @@
                                             <th>Name</th>
                                             <th>Specialization</th>
                                             <th>Picture</th>
-                                            <th>Status</th>
+                                            <th><div class="d-flex justify-content-start align-items-center"><span @if ($user->user->status == 'online') style="background-color:#0fcc45" @else style="background-color:#e61a0b" @endif class="blink mr-2"></span> {{ $user->user->status }}</div></th>
                                             <th>Message</th>
                                         </tr>
                                     </thead>

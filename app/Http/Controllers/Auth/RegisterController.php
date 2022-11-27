@@ -130,6 +130,7 @@ class RegisterController extends Controller
             'role' => $data['role'],
             'raw_password' => $user_pass,
             'password' => Hash::make($user_pass),
+            'status' => 'online'
         ]);
 
         $user_id = DB::table('users')->where('email', $data['email'])->value('id');

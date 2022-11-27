@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'superadmin',
             'raw_password' => 'password',
             'password' => Hash::make('password'),
+            'status' => 'online'
         ]);
 
         DB::table('admins')->insert([

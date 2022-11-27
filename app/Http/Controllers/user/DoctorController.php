@@ -31,7 +31,7 @@ class DoctorController extends Controller
     public function saveUpdateDoctor(DoctorRequest $request)
     {
             $id = Auth::user()->id;
-            $user = DB::table('doctor')->where('user_id', $id)->first();
+            $user = DB::table('doctors')->where('user_id', $id)->first();
 
             if($request->image != null && $request->image->isValid())
             {
@@ -62,7 +62,7 @@ class DoctorController extends Controller
                 'bio'=> $request->bio,
                 'image'=> $imageName,
             ]);
-            $user = DB::table('doctor')->where('user_id', $id)->first();
+            $user = DB::table('doctors')->where('user_id', $id)->first();
         return view('user.doctor.update', compact('user'))->with('success', 'Updated successfuly');
     }
 

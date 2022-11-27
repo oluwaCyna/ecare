@@ -23,6 +23,28 @@
 
 
 @yield('scss-script')
+
+<style>
+  span.blink {
+  display: block;
+  width: 15px;
+  height: 15px;
+  
+  opacity: 0.7;
+  border-radius: 50%;
+  
+  animation: blink 1s linear infinite;
+}
+
+/*Animations*/
+
+@keyframes blink {
+  100% { transform: scale(2, 2); 
+          opacity: 0;
+        }
+}
+
+</style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -43,20 +65,32 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-            {{ Auth::user()->first_name }}
+        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100px" v-pre>
+          <div class="d-flex justify-content-between align-items-center"><span @if (Auth::user()->status == 'online') style="background-color:#0fcc45" @else style="background-color:#e61a0b" @endif class="blink"></span> {{ Auth::user()->status }}</div>
         </a>
 
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ route('logout') }}"
+            <a class="dropdown-item" href="#"
                onclick="event.preventDefault();
-                             document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
+                             document.getElementById('online-form').submit();">
+              {{ __('Online') }}
+            </a>
+            <a class="dropdown-item" href="#"
+               onclick="event.preventDefault();
+                             document.getElementById('offline-form').submit();">
+              {{ __('Offline') }}
             </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            <form id="online-form" action="{{ route('status.update') }}" method="POST" class="d-none">
                 @csrf
+                @method('put')
+                <input type="hidden" value="online" name="status">
             </form>
+            <form id="offline-form" action="{{ route('status.update') }}" method="POST" class="d-none">
+              @csrf
+              @method('put')
+              <input type="hidden" value="offline" name="status">
+          </form>
         </div>
     </li>
       <!-- Notifications Dropdown Menu -->
