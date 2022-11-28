@@ -112,15 +112,16 @@
         </div>
     </div>
 </div>
-
-{{-- <script src="https://js.pusher.com/4.1/pusher.min.js"></script> --}}
-      
+{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+@vite('resources/js/app.js')
+{{-- <script type="module" src="http://127.0.0.1:5173/resources/js/app.js"></script> --}}
     <script>
-      
-      Echo.channel('notification')
-      .listen('MessageNotification', (e) => {
-          alert('e.message.message');
-      });
+      console.log(Echo)
+      // Echo.channel('notification')
+      // .listen('MessageNotification', (e) => {
+      //     alert('e.message.message');
+      // });
     </script>
 @endsection
 
